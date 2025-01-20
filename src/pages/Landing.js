@@ -1,179 +1,137 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import logo from "../assets/logo.svg";
-import landing from "../assets/landing.svg";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function Landing() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const landingImageRef = useRef(null);
-  const logoRef = useRef(null);
-  const mainLogoRef = useRef(null);
-  const containerRef = useRef(null);
+const Landing = () => {
   const headerRef = useRef(null);
-  const navContainerRef = useRef(null);
-  const navigationRef = useRef(null);
-
-  const isActiveRoute = (path) => location.pathname === path;
+  const logoRef = useRef(null);
+  const navItemsRef = useRef(null);
+  const heroImageRef = useRef(null);
 
   useEffect(() => {
-    // Initial setup
-    gsap.set(mainLogoRef.current, {
-      width: "100%",
-      x: 0,
-      y: 0,
-    });
-
-    gsap.set(landingImageRef.current, {
-      x: 0,
-      y: 0,
-    });
-
-    gsap.set(navigationRef.current, {
-      x: 0,
-      y: 0,
-      scale: 1,
-    });
-
-    // Create the scroll-triggered animation
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: containerRef.current,
+        trigger: headerRef.current,
         start: "top top",
         end: "+=200",
-        scrub: true,
+        scrub: 0.5,
       },
     });
 
-    // Animate the logo
-    tl.to(mainLogoRef.current, {
-      width: "200px",
-      x: -700,
-      y: -130,
-      ease: "power1.out",
+    // Animate logo
+    tl.to(logoRef.current, {
+      scale: 0.5,
+      x: "-30vw",
+      y: 0,
       duration: 1,
+      ease: "power2.inOut",
     });
 
-    // Animate the navigation to center
+    // Animate nav items
     tl.to(
-      navigationRef.current,
+      navItemsRef.current,
       {
-        x: "200%",
-        y: 0,
-
-        scale: 0.85,
-        ease: "power1.out",
+        x: 0,
+        opacity: 1,
         duration: 1,
-        zIndex: 10,
+        ease: "power2.inOut",
       },
       "<"
     );
 
-    // Animate the landing image
+    // Animate hero image
     tl.to(
-      landingImageRef.current,
+      heroImageRef.current,
       {
-        x: 10,
-        y: -400,
-        scale: 0.6,
-        ease: "power1.out",
+        scale: 0.3,
+        y: "-50%",
+        x: "35vw",
+        opacity: 0.8,
         duration: 1,
+        ease: "power2.inOut",
       },
       "<"
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      tl.kill();
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-[200vh] bg-black">
-      {/* Fixed Header */}
-      <div className="fixed top-0 left-0 right-0">
-        <div ref={headerRef} className="w-full bg-black/80 backdrop-blur-sm ">
-          <div className="lg:w-[80%] md:w-[90%] mx-auto justify-between my-10 header sm:hidden hidden lg:flex md:hidden items-center">
-            {/* Logo Container */}
-            <div className="w-[120px] opacity-0">
-              {/* <img
-                ref={logoRef}
-                src={logo}
-                alt="TriggerX Logo"
-                className="w-full"
-              /> */}
-            </div>
-
-            {/* Navigation Container - Now positioned absolutely for animation */}
-            <div ref={navigationRef} className="absolute left-1/6   z-100 ">
-              <div className="flex items-center bg-[#181818F0] rounded-xl p-1">
-                <button
-                  onClick={() => navigate("/")}
-                  className={`px-6 py-2 rounded-xl text-white text-sm transition-all
-                    ${
-                      isActiveRoute("/")
-                        ? "bg-[#D9D9D924] border border-[#4B4A4A]"
-                        : "hover:bg-[#D9D9D924] hover:border hover:border-[#4B4A4A]"
-                    }`}
-                >
-                  Home
-                </button>
-                <button
-                  onClick={() => navigate("/create-job")}
-                  className={`px-6 py-2 rounded-xl text-white text-sm transition-all
-                    ${
-                      isActiveRoute("/create-job")
-                        ? "bg-[#D9D9D924] border border-[#4B4A4A]"
-                        : "hover:bg-[#D9D9D924] hover:border hover:border-[#4B4A4A]"
-                    }`}
-                >
-                  Create Job
-                </button>
-                <button
-                  onClick={() => navigate("/dashboard")}
-                  className={`px-6 py-2 rounded-xl text-white text-sm transition-all
-                    ${
-                      isActiveRoute("/dashboard")
-                        ? "bg-[#D9D9D924] border border-[#4B4A4A]"
-                        : "hover:bg-[#D9D9D924] hover:border hover:border-[#4B4A4A]"
-                    }`}
-                >
-                  Dashboard
-                </button>
-              </div>
-            </div>
-
-            {/* Connect Wallet */}
-            <ConnectButton />
+    <div className="min-h-screen bg-black">
+      <header ref={headerRef} className="fixed top-0 w-full bg-black z-50 p-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div ref={logoRef} className="text-white text-4xl font-bold">
+            TRIGGERX
           </div>
+
+          <nav ref={navItemsRef} className="opacity-0 translate-x-full">
+            <div className="flex gap-8 text-white">
+              <a href="#" className="hover:text-gray-300">
+                Home
+              </a>
+              <a href="#" className="hover:text-gray-300">
+                Create Job
+              </a>
+              <a href="#" className="hover:text-gray-300">
+                Dashboard
+              </a>
+              <button className="bg-[#e8ff00] text-black px-4 py-2 rounded-full">
+                Connect Wallet
+              </button>
+            </div>
+          </nav>
         </div>
 
-        {/* Hero Section with Animated Elements */}
-        <div className="w-[70%] mx-auto flex my-[100px] items-center flex-col">
+        <div
+          ref={heroImageRef}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
           <img
-            ref={mainLogoRef}
-            src={logo}
-            alt="TriggerX Logo"
-            className="w-full"
+            src="/path-to-your-crystal-image.png"
+            alt="Crystal"
+            className="w-64 h-64 object-contain"
           />
-          <div>
-            <img
-              ref={landingImageRef}
-              src={landing}
-              alt="Landing illustration"
-              className="w-full"
-            />
+        </div>
+      </header>
+
+      <main className="pt-32">
+        <div className="max-w-4xl mx-auto text-white text-center">
+          <h1 className="text-6xl font-bold mb-8">
+            Next-Gen Blockchain Automation
+          </h1>
+          <div className="flex justify-center gap-4 mb-8">
+            <button className="bg-white text-black px-6 py-2 rounded-full">
+              Signless
+            </button>
+            <button className="bg-white text-black px-6 py-2 rounded-full">
+              Secure
+            </button>
+            <button className="bg-white text-black px-6 py-2 rounded-full">
+              RiskFree
+            </button>
+          </div>
+          <p className="text-gray-400 mb-8">
+            TriggerX is the future of blockchain automation—bringing ease,
+            trust, and innovation to developers, dApps, and enterprises. Powered
+            by EigenLayer's AVS (Actively Validated Services), we deliver
+            reliable and secure automation across multi-chain ecosystems.
+          </p>
+          <div className="flex justify-center gap-4">
+            <button className="bg-white text-black px-8 py-3 rounded-full">
+              Get Started
+            </button>
+            <button className="border border-white text-white px-8 py-3 rounded-full">
+              Learn More
+            </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
-}
+};
 
 export default Landing;

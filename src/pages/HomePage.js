@@ -45,6 +45,7 @@ function Homepage() {
   const navContainerRef = useRef(null);
   const navigationRef = useRef(null);
   const nextGenRef = useRef(null);
+  const animationPlayed = useRef(false);
 
   const navItems = [
     { id: "home", path: "/", label: "Home" },
@@ -53,8 +54,9 @@ function Homepage() {
   ];
 
   const isActiveRoute = (path) => location.pathname === path;
-
   useEffect(() => {
+    if (animationPlayed.current) return; // Prevent re-initialization
+
     // Initial setup
     gsap.set(mainLogoRef.current, {
       width: "100%",
@@ -74,21 +76,32 @@ function Homepage() {
     });
 
     const tl = gsap.timeline({
+      onComplete: () => {
+        animationPlayed.current = true; // Set the flag to true after animation completes
+        // Ensure elements are in their final state
+        gsap.set(mainLogoRef.current, { width: "150px", x: -700, y: -200 });
+        gsap.set(navigationRef.current, { x: "150%", y: 0, zIndex: 10 });
+        gsap.set(landingImageRef.current, { x: 10, y: -550, scale: 0.6 });
+        gsap.set(containerRef.current, { height: "200px" });
+        gsap.set(nextGenRef.current, { opacity: 1, y: -200 });
+      },
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=200",
+        end: "+=150",
         scrub: true,
+        once: true, // Play animation only once
       },
     });
 
     // Animate the logo
     tl.to(mainLogoRef.current, {
-      width: "200px",
+      width: "150px",
       x: -700,
-      y: -130,
-      ease: "power1.out",
-      duration: 1,
+      y: -200,
+      ease: "power2.out", // Smooth easing
+      duration: 1, // Short duration
+      delay: 0.1, // Slight delay for smooth start
     });
 
     // Animate the navigation to center
@@ -97,10 +110,9 @@ function Homepage() {
       {
         x: "150%",
         y: 0,
-
-        scale: 0.85,
-        ease: "power1.out",
+        ease: "power2.out", // Smooth easing
         duration: 1,
+        delay: 0.2,
         zIndex: 10,
       },
       "<"
@@ -111,42 +123,44 @@ function Homepage() {
       landingImageRef.current,
       {
         x: 10,
-        y: -400,
+        y: -550,
         scale: 0.6,
-        ease: "power1.out",
+        ease: "power2.out", // Smooth easing
         duration: 1,
+        delay: 0.3,
       },
       "<"
     );
-    // Animate the landing image
+
     tl.to(navContainerRef.current, {
       position: "relative",
     });
 
-    // Add both animations to the timeline simultaneously using position parameter
+    // Container height and nextGen animation
     tl.to(
       containerRef.current,
       {
         height: "200px",
         duration: 1,
-        ease: "power1.out",
+        ease: "power2.out",
+        delay: 0.4,
       },
       0
-    ) // Position 0 means start at beginning of timeline
-      .fromTo(
-        nextGenRef.current,
-        {
-          opacity: 0,
-          y: 100,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power2.out",
-        },
-        0
-      ); // Position 0 means start at same time as first animation
+    ).fromTo(
+      nextGenRef.current,
+      {
+        opacity: 0,
+        y: -100,
+      },
+      {
+        opacity: 1,
+        y: -200,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.5,
+      },
+      0
+    );
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -185,7 +199,7 @@ function Homepage() {
   return (
     <>
       <div>
-        <div ref={containerRef} className="relative h-[100vh] bg-black ">
+        <div ref={containerRef} className="relative h-[100vh] ">
           {/* Fixed Header */}
           <div ref={navContainerRef} className="fixed top-0 left-0 right-0">
             <div ref={headerRef} className="w-full">
@@ -237,19 +251,19 @@ function Homepage() {
             </div>
 
             {/* Hero Section with Animated Elements */}
-            <div className="w-[70%] mx-auto flex my-[100px] items-center flex-col">
+            <div className="w-[70%] mx-auto flex my-[150px] items-center flex-col relative">
               <img
                 ref={mainLogoRef}
                 src={logo}
                 alt="TriggerX Logo"
                 className="w-full"
               />
-              <div>
+              <div className="absolute top-20">
                 <img
                   ref={landingImageRef}
                   src={landing}
                   alt="Landing illustration"
-                  className="w-full"
+                  className="lg:w-full md:w-[500px]"
                 />
               </div>
             </div>
@@ -261,12 +275,7 @@ function Homepage() {
               <img src={nav} alt="Nav Background" className="w-64 h-auto z-0" />
             </div>
             <div className="flex-shrink-0 relative z-10">
-              <img src={logo} alt="Logo" width={150} />
-            </div>
-            <div className="relative flex items-center gap-5">
-              <div className="flex-shrink-0 relative z-10">
-                <ConnectButton />
-              </div>
+              {/* <img src={logo} alt="Logo" width={150} /> */}
               <div className="lg:hidden">
                 <h4
                   onClick={() => setMenuOpen(!menuOpen)}
@@ -311,6 +320,11 @@ function Homepage() {
                     </nav>
                   </div>
                 )}
+              </div>
+            </div>
+            <div className="relative flex items-center gap-5">
+              <div className="flex-shrink-0 relative z-10">
+                <ConnectButton />
               </div>
             </div>
           </div>
@@ -703,8 +717,8 @@ function Homepage() {
 
             {/* Subtitle in a dark glass-like container */}
 
-            <div className=" rounded-lg px-6 py-3 border border-[#FFFFFF] mx-auto mt-8 min-w-min lg:w-[650px] md:w-[650px] sm:w-[400px]">
-              <h4 className="text-[#A2A2A2] text-lg md:text-base text-center">
+            <div className="bg-[#141414] rounded-lg px-6 py-3 border border-[#FFFFFF] mx-auto mt-8 min-w-min lg:w-[650px] md:w-[650px] sm:w-[400px]">
+              <h4 className="text-[#A2A2A2] text-lg md:text-base text-center ">
                 EigenLayer's AVS provides the backbone of TriggerX's security,
                 enabling
               </h4>
@@ -843,7 +857,7 @@ function Homepage() {
 
             {/* Subtitle in a dark glass-like container */}
 
-            <div className=" rounded-lg px-6 py-3 border border-[#FFFFFF] mx-auto mt-8 min-w-min w-[250px]">
+            <div className=" rounded-lg px-6 py-3 border border-[#FFFFFF] mx-auto mt-8 min-w-min w-[250px] bg-[#141414]">
               <h4 className="text-[#A2A2A2] text-lg md:text-base text-center">
                 Use cases include
               </h4>
@@ -899,7 +913,7 @@ function Homepage() {
                 Who is TriggerX For?
               </h1>
 
-              <div className=" rounded-lg px-6 py-3 border border-[#FFFFFF] mx-auto mt-8 min-w-min lg:w-[600px] md:w-[600px] sm:w-[400px]">
+              <div className="bg-[#141414] rounded-lg px-6 py-3 border border-[#FFFFFF] mx-auto mt-8 min-w-min lg:w-[600px] md:w-[600px] sm:w-[400px]">
                 <h4 className="text-[#A2A2A2] text-md md:text-base text-center">
                   TriggerX makes automation seamless, secure, and scalable
                 </h4>

@@ -6,19 +6,36 @@ import CreateJobPage from "./pages/CreateJobPage";
 import DashboardPage from "./pages/DashboardPage";
 import Providers from "./providers";
 import Landing from "./pages/Landing";
+import { useEffect, useState } from "react";
+import Preloader from "../src/Preloader";
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Providers>
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/create-job" element={<CreateJobPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-          </Routes>
-        </Layout>
-      </Router>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/create-job" element={<CreateJobPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+            </Routes>
+          </Layout>
+        </Router>
+      )}
     </Providers>
   );
 };
