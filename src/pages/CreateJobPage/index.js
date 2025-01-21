@@ -13,8 +13,6 @@ import { useJobCreation } from "./hooks/useJobCreation";
 import Modal from "react-modal";
 import Header from "../../components/Header";
 // import { toast } from 'react-toastify';
-// import { ethers } from 'ethers';
-// import axios from 'axios';
 
 if (typeof window !== "undefined") {
   Modal.setAppElement("#root");
@@ -113,7 +111,7 @@ function CreateJobPage() {
 
   return (
     <>
-    <Header/>
+      <Header />
       <div className="min-h-screen  text-white pt-32 pb-20">
         {/* Background gradients */}
         <div className="fixed inset-0  pointer-events-none" />
