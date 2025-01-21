@@ -84,14 +84,14 @@ function Homepage() {
         gsap.set(mainLogoRef.current, { width: "150px", x: -700, y: -200 });
         gsap.set(navigationRef.current, { x: "150%", y: 0, zIndex: 10 });
         gsap.set(landingImageRef.current, { x: 10, y: -550, scale: 0.6 });
-        gsap.set(containerRef.current, { height: "150px" });
+        gsap.set(containerRef.current, { height: "200px" });
         gsap.set(nextGenRef.current, { opacity: 1, y: -200 });
       },
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=150",
-        scrub: true,
+        end: "+=200",
+        // scrub: true,
         once: true, // Play animation only once
       },
     });
@@ -103,7 +103,6 @@ function Homepage() {
       y: -200,
       ease: "power2.out", // Smooth easing
       duration: 1, // Short duration
-      delay: 0.1, // Slight delay for smooth start
     });
 
     // Animate the navigation to center
@@ -114,7 +113,6 @@ function Homepage() {
         y: 0,
         ease: "power2.out", // Smooth easing
         duration: 1,
-        delay: 0.2,
         zIndex: 10,
       },
       "<"
@@ -129,7 +127,6 @@ function Homepage() {
         scale: 0.6,
         ease: "power2.out", // Smooth easing
         duration: 1,
-        delay: 0.3,
       },
       "<"
     );
@@ -145,10 +142,9 @@ function Homepage() {
     tl.to(
       containerRef.current,
       {
-        height: "150px",
+        height: "200px",
         duration: 1,
         ease: "power2.out",
-        delay: 0.4,
       },
       0
     );
@@ -156,13 +152,11 @@ function Homepage() {
       nextGenRef.current,
 
       {
+        height: "200px",
         opacity: 1,
-        y: -500,
         duration: 1,
         ease: "power2.out",
-        delay: 0.5,
-      },
-      0
+      }
     );
     gsap.to(circularTextRef.current, {
       rotation: 360, // Full circle
