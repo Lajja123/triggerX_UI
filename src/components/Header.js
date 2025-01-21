@@ -189,9 +189,18 @@ const Header = () => {
             </div>
           </nav>
         </div>
-        <div>
-          <ConnectButton />
-        </div>
+        {/* Connect Wallet */}
+        <button className="relative bg-[#222222] text-black  py-0 rounded-full group transition-transform">
+          <span className="absolute inset-0 p-0 bg-[#222222] text-black border border-white rounded-full scale-100 translate-y-0 transition-all duration-300 ease-out group-hover:translate-y-2">
+            {/* This is the red background box */}
+          </span>
+          <span className="absolute inset-0 bg-white p-0 rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
+            {/* This is the white box that moves up */}
+          </span>
+          <span className="relative z-10 p-0 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+            <ConnectButton />
+          </span>
+        </button>
       </div>
 
       {/* Mobile Navigation */}

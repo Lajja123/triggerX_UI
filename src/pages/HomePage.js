@@ -46,6 +46,8 @@ function Homepage() {
   const navigationRef = useRef(null);
   const nextGenRef = useRef(null);
   const animationPlayed = useRef(false);
+  const circularTextRef = useRef(null);
+  const arrowRef = useRef(null);
 
   const navItems = [
     { id: "home", path: "/", label: "Home" },
@@ -82,7 +84,7 @@ function Homepage() {
         gsap.set(mainLogoRef.current, { width: "150px", x: -700, y: -200 });
         gsap.set(navigationRef.current, { x: "150%", y: 0, zIndex: 10 });
         gsap.set(landingImageRef.current, { x: 10, y: -550, scale: 0.6 });
-        gsap.set(containerRef.current, { height: "200px" });
+        gsap.set(containerRef.current, { height: "150px" });
         gsap.set(nextGenRef.current, { opacity: 1, y: -200 });
       },
       scrollTrigger: {
@@ -131,6 +133,9 @@ function Homepage() {
       },
       "<"
     );
+    tl.to(arrowRef.current, {
+      display: "none",
+    });
 
     tl.to(navContainerRef.current, {
       position: "relative",
@@ -140,27 +145,31 @@ function Homepage() {
     tl.to(
       containerRef.current,
       {
-        height: "200px",
+        height: "150px",
         duration: 1,
         ease: "power2.out",
         delay: 0.4,
       },
       0
-    ).fromTo(
+    );
+    tl.to(
       nextGenRef.current,
-      {
-        opacity: 0,
-        y: -100,
-      },
+
       {
         opacity: 1,
-        y: -200,
+        y: -500,
         duration: 1,
         ease: "power2.out",
         delay: 0.5,
       },
       0
     );
+    gsap.to(circularTextRef.current, {
+      rotation: 360, // Full circle
+      duration: 10, // Duration of one full rotation
+      repeat: -1, // Infinite loop
+      ease: "linear", // Smooth continuous rotation
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -246,7 +255,17 @@ function Homepage() {
                 </div>
 
                 {/* Connect Wallet */}
-                <ConnectButton />
+                <button className="relative bg-[#222222] text-black  py-0 rounded-full group transition-transform">
+                  <span className="absolute inset-0 p-0 bg-[#222222] text-black border border-white rounded-full scale-100 translate-y-0 transition-all duration-300 ease-out group-hover:translate-y-2">
+                    {/* This is the red background box */}
+                  </span>
+                  <span className="absolute inset-0 bg-white p-0 rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
+                    {/* This is the white box that moves up */}
+                  </span>
+                  <span className="relative z-10 p-0 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                    <ConnectButton />
+                  </span>
+                </button>
               </div>
             </div>
 
@@ -328,6 +347,29 @@ function Homepage() {
               </div>
             </div>
           </div>
+          <div
+            ref={arrowRef}
+            className="fixed right-10 bottom-20 z-50 flex flex-col items-center"
+          >
+            <div className="circular-text-container ">
+              <div className="scroll-arrow border border-white rounded-full p-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17 13l-5 5m0 0l-5-5m5 5V6"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div>
@@ -374,11 +416,27 @@ function Homepage() {
 
               {/* Buttons */}
               <div className="flex gap-4">
-                <button className="liquid-button bg-white hover:bg-gray-100 text-black px-6 py-3 rounded-full transition-colors">
-                  Create Job
+                <button className="relative bg-[#222222] text-black border border-white px-6 py-3 rounded-full group transition-transform">
+                  <span className="absolute inset-0 bg-[#222222] border border-white rounded-full scale-100 translate-y-0 transition-all duration-300 ease-out group-hover:translate-y-2">
+                    {/* This is the red background box */}
+                  </span>
+                  <span className="absolute inset-0 bg-white rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
+                    {/* This is the white box that moves up */}
+                  </span>
+                  <span className="relative z-10 px-6 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                    Create Job
+                  </span>
                 </button>
-                <button className="liquid-button bg-white hover:bg-gray-100 text-black px-6 py-3 rounded-full transition-colors">
-                  Learn More
+                <button className="relative bg-[#222222] text-black border border-white px-6 py-3 rounded-full group transition-transform">
+                  <span className="absolute inset-0 bg-[#222222] border border-white rounded-full scale-100 translate-y-0 transition-all duration-300 ease-out group-hover:translate-y-2">
+                    {/* This is the red background box */}
+                  </span>
+                  <span className="absolute inset-0 bg-white rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
+                    {/* This is the white box that moves up */}
+                  </span>
+                  <span className="relative z-10 px-6 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                    Learn More
+                  </span>
                 </button>
               </div>
             </div>
@@ -733,20 +791,26 @@ function Homepage() {
 
             <div className="w-[100px] h-[2px] bg-white"></div>
           </div> */}
-              <div className="relative text-white p-8  lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto">
+              <div className="relative text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto group">
                 {/* Decorative Corner Elements */}
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md"></div>
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md"></div>
+                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
+                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
 
                 {/* Content */}
                 <div className="space-y-4">
-                  <div className="flex items-start space-x-3 ">
-                    <div className="flex items-start justify-center rounded-full">
-                      <img src={honesty} alt={""} />
+                  <div className="flex items-start space-x-3">
+                    <div className="flex items-start justify-center rounded-full overflow-hidden ">
+                      <img
+                        src={honesty}
+                        alt=""
+                        className="transition-all duration-300 group-hover:rounded-lg  group-hover:rotate-90"
+                      />
                     </div>
 
                     <div>
-                      <h3 className="text-xl">Incentivized Honesty</h3>
+                      <h3 className="text-xl transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#BD72F7] group-hover:bg-clip-text group-hover:text-transparent">
+                        Incentivized Honesty
+                      </h3>
                       <h4 className="text-[#A2A2A2] mt-2 text-md">
                         Misbehaving keepers are penalized through slashing,
                         ensuring reliability.
@@ -783,7 +847,7 @@ function Homepage() {
             </div>
 
             {/* Right Column */}
-            <div className="flex justify-center lg:gap-[50px]  md:gap-[50px]  sm:gap-[20px] gap-[20px] flex-col relative">
+            <div className="flex justify-center lg:gap-[50px]  md:gap-[50px]  sm:gap-[20px] gap-[20px] flex-col relative ">
               {/* Line connecting to top box */}
               {/* Line connecting to top box with diamond */}
               {/* <div className="absolute top-[25%] left-[-100px] flex items-center flex-row-reverse">
@@ -791,16 +855,25 @@ function Homepage() {
             <div className="w-2 h-2 bg-white transform rotate-45"></div>
           </div> */}
 
-              <div className="relative text-white p-8 max-w-xs  lg:max-w-sm md:max-w-sm sm:max-w-xs mx-auto">
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md"></div>
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md"></div>
+              <div className="relative text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto group">
+                {/* Decorative Corner Elements */}
+                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
+                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
+
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <div className="flex items-center justify-center rounded-full">
-                      <img src={security} alt={""} />
+                    <div className="group flex items-center justify-center rounded-full">
+                      <img
+                        src={security}
+                        alt=""
+                        className="transform group-hover:scale-x-[-1] transition-transform duration-300"
+                      />
                     </div>
+
                     <div>
-                      <h3 className="text-xl">Shared Security</h3>
+                      <h3 className="text-xl transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#F8FF7C] group-hover:bg-clip-text group-hover:text-transparent">
+                        Shared Security
+                      </h3>
                       <h4 className="text-[#A2A2A2] mt-2 text-md">
                         Operators leverage EigenLayer's crypto-economic
                         guarantees
@@ -816,16 +889,24 @@ function Homepage() {
             <div className="w-2 h-2 bg-white transform rotate-45"></div>
           </div> */}
 
-              <div className="relative text-white p-8 max-w-xs  lg:max-w-sm md:max-w-sm sm:max-w-xs mx-auto">
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md"></div>
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md"></div>
+              <div className="relative text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto group">
+                {/* Decorative Corner Elements */}
+                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
+                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
+
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
-                    <div className="flex items-center justify-center rounded-full">
-                      <img src={validation} alt={""} />
+                    <div className="flex items-center justify-center rounded-full group">
+                      <img
+                        src={validation}
+                        alt={""}
+                        className="transform group-hover:scale-y-[-1] transition-transform duration-300"
+                      />
                     </div>
                     <div>
-                      <h3 className="text-xl">Decentralized Validations</h3>
+                      <h3 className="text-xl transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#68FF9F] group-hover:bg-clip-text group-hover:text-transparent">
+                        Decentralized Validations
+                      </h3>
                       <h4 className="text-[#A2A2A2] mt-2 text-md">
                         Tasks are verified by a distributed network of keepers
                         using AVS mechanisms

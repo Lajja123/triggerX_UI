@@ -12,7 +12,7 @@ const myCustomTheme = {
     modalOverlay: "blur(5px)",
   },
   colors: {
-    accentColor: "#F8FF7C",
+    accentColor: "white",
     accentColorForeground: "black",
     actionButtonBorder: "white",
     actionButtonBorderMobile: "rgba(255, 255, 255, 0.25)",
@@ -22,7 +22,7 @@ const myCustomTheme = {
     connectButtonBackground: "#F8FF7C",
     connectButtonBackgroundError: "#FF494A",
     connectButtonInnerBackground: "#F8FF7C",
-    connectButtonText: "black",
+    connectButtonText: "[#000000]",
     connectButtonTextError: "black",
     connectionIndicator: "#F8FF7C",
     downloadBottomCardBackground:
@@ -57,7 +57,7 @@ const myCustomTheme = {
     modalMobile: "8px",
   },
   shadows: {
-    connectButton: "0px 4px 12px rgba(0, 0, 0, 0.3)",
+    connectButton: "0px 0px 0px rgba(0, 0, 0, 0.3)",
     dialog: "0px 8px 32px rgba(0, 0, 0, 0.5)",
     profileDetailsAction: "0px 2px 6px rgba(37, 41, 46, 0.2)",
     selectedOption: "0px 2px 6px rgba(0, 0, 0, 0.4)",
