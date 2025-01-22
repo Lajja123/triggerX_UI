@@ -22,7 +22,7 @@ const myCustomTheme = {
     connectButtonBackground: "#F8FF7C",
     connectButtonBackgroundError: "#FF494A",
     connectButtonInnerBackground: "#F8FF7C",
-    connectButtonText: "[#000000]",
+    connectButtonText: "black",
     connectButtonTextError: "black",
     connectionIndicator: "#F8FF7C",
     downloadBottomCardBackground:
