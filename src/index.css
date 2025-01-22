@@ -20,7 +20,9 @@ body {
 h1 {
   font-family: var(--font-heading);
 }
-
+.headerbg {
+  background-image: url("assets//grid.png");
+}
 /* {
   font-family: var(--font-subheading);
 } */

@@ -42,7 +42,7 @@ function Homepage() {
   const mainLogoRef = useRef(null);
   const containerRef = useRef(null);
   const headerRef = useRef(null);
-  const navContainerRef = useRef(null);
+  // const navContainerRef = useRef(null);
   const navigationRef = useRef(null);
   const nextGenRef = useRef(null);
   const animationPlayed = useRef(false);
@@ -134,9 +134,9 @@ function Homepage() {
       display: "none",
     });
 
-    tl.to(navContainerRef.current, {
-      position: "relative",
-    });
+    // tl.to(navContainerRef.current, {
+    //   position: "relative",
+    // });
 
     // Container height and nextGen animation
     tl.to(
@@ -152,7 +152,7 @@ function Homepage() {
       nextGenRef.current,
 
       {
-        height: "200px",
+        height: "100px",
         opacity: 1,
         duration: 1,
         ease: "power2.out",
@@ -204,9 +204,9 @@ function Homepage() {
       <div>
         <div ref={containerRef} className="relative h-[100vh] ">
           {/* Fixed Header */}
-          <div ref={navContainerRef} className="fixed top-0 left-0 right-0">
-            <div ref={headerRef} className="w-full">
-              <div className="lg:w-[80%] md:w-[90%] mx-auto justify-between my-10 header sm:hidden hidden lg:flex md:hidden items-center">
+          <div className="fixed top-0 left-0 right-0">
+            <div ref={headerRef} className="w-full bg-[#0a0a0a]">
+              <div className="headerbg lg:w-[100%] md:w-[90%] px-20 justify-between py-10 header sm:hidden hidden lg:flex md:hidden items-center">
                 {/* Logo Container */}
                 <div className="w-[120px] opacity-0">
                   {/* <img
@@ -366,10 +366,10 @@ function Homepage() {
           </div>
         </div>
 
-        <div>
+        <div className="relative -z-10">
           <div
             // ref={nextGenRef}
-            className="relative w-[90%] mx-auto lg:my-40 md:my-40 my-10 sm:my-10"
+            className="relative w-[90%] mx-auto lg:my-40 md:my-40 my-10 sm:my-10 "
           >
             <h1 className="relative text-center text-4xl sm:text-5xl md:text-5xl lg:text-7xl leading-[3rem] lg:leading-0 md:leading-12 sm:leading-15">
               Next-Gen Blockchain
@@ -779,12 +779,6 @@ function Homepage() {
           <div className="w-[90%] mx-auto lg:mt-40 md:mt-40 mt-20 sm:mt-20 flex justify-between relative sm:flex-col flex-col md:flex-row lg:flex-row items-center ">
             {/* Left Column */}
             <div className="flex justify-between gap-[200px] flex-col relative">
-              {/* Line connecting to top box */}
-              {/* <div className="absolute top-[25%] right-[-100px] flex items-center">
-            <div className="w-2 h-2 bg-white transform rotate-45"></div>
-
-            <div className="w-[100px] h-[2px] bg-white"></div>
-          </div> */}
               <div className="relative text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto group">
                 {/* Decorative Corner Elements */}
                 <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
@@ -816,7 +810,12 @@ function Homepage() {
 
               {/* Line connecting to bottom box */}
               {/* <div className="absolute bottom-[30%] right-[-100px] w-[100px] h-[2px] bg-[#C07AF6]"></div> */}
+              {/* Line connecting to top box */}
+              <div className="absolute top-[25%] right-[-100px] flex items-center">
+                <div className="w-2 h-2 bg-white transform rotate-45"></div>
 
+                <div className="w-[100px] h-[2px] bg-white"></div>
+              </div>
               <div className="bg-[#141414] text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-sm mx-auto rounded-[30px] sm:hidden hidden lg:block md:block">
                 <div className="relative text-white p-8 max-w-sm mx-auto">
                   <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#C07AF6] rounded-tl-md"></div>
