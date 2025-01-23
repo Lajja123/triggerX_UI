@@ -37,83 +37,122 @@ const Landing = () => {
 
   const isActiveRoute = (path) => location.pathname === path;
   useEffect(() => {
-    if (animationPlayed.current) return; // Prevent re-initialization
+    if (animationPlayed.current) return;
 
-    // Initial setup
+    // Initial setup with viewport-relative positioning
     gsap.set(mainLogoRef.current, {
       width: "100%",
-      x: 0,
-      y: 0,
+      xPercent: 0,
+      yPercent: 0,
     });
 
     gsap.set(landingImageRef.current, {
-      x: 0,
-      y: 0,
-    });
-
-    gsap.set(navigationRef.current, {
-      x: 0,
-      y: 0,
+      xPercent: 0,
+      yPercent: 0,
       scale: 1,
     });
 
+    gsap.set(navigationRef.current, {
+      xPercent: 0,
+      yPercent: 0,
+      scale: 1,
+    });
+
+    // Create a function to calculate viewport-based positions
+    const calculatePositions = () => {
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      return {
+        logo: {
+          width: Math.min(200, viewportWidth * 0.15), // 15% of viewport width, max 150px
+          xPercent: -50, // Center horizontally
+          yPercent: -700, // 20% from top
+          scale: 0.6,
+        },
+        nav: {
+          xPercent: -50, // Center
+          yPercent: -0, // 30% from top
+        },
+        landing: {
+          xPercent: -0, // Center horizontally
+          yPercent: -100, // 40% from top
+          scale: 0.6,
+        },
+      };
+    };
+
+    const positions = calculatePositions();
+
     const tl = gsap.timeline({
       onComplete: () => {
-        animationPlayed.current = true; // Set the flag to true after animation completes
-        // Ensure elements are in their final state
-        gsap.set(mainLogoRef.current, { width: "150px", x: -700, y: -200 });
-        gsap.set(navigationRef.current, { x: "150%", y: 0, zIndex: 10 });
-        gsap.set(landingImageRef.current, { x: 10, y: -550, scale: 0.6 });
+        animationPlayed.current = true;
+        // Set final positions using calculated values
+        gsap.set(mainLogoRef.current, {
+          width: positions.logo.width,
+          xPercent: positions.logo.xPercent,
+          yPercent: positions.logo.yPercent,
+          left: "50%", // Center anchor point
+        });
+        gsap.set(navigationRef.current, {
+          xPercent: positions.nav.xPercent,
+          yPercent: positions.nav.yPercent,
+          left: "50%",
+          transform: "translateX(-50%)", // Center the navigation
+        });
+        gsap.set(landingImageRef.current, {
+          xPercent: positions.landing.xPercent,
+          yPercent: positions.landing.yPercent,
+          scale: positions.landing.scale,
+          left: "50%",
+        });
         gsap.set(containerRef.current, { height: "200px" });
-        gsap.set(nextGenRef.current, { opacity: 1, y: -200 });
+        gsap.set(nextGenRef.current, { opacity: 1, yPercent: -20 });
       },
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
         end: "+=200",
-        // scrub: true,
-        once: true, // Play animation only once
+        once: true,
       },
     });
 
-    // Animate the logo
+    // Animate to final positions
     tl.to(mainLogoRef.current, {
-      width: "150px",
-      x: -700,
-      y: -200,
-      ease: "power2.out", // Smooth easing
-      duration: 1, // Short duration
+      width: positions.logo.width,
+      xPercent: positions.logo.xPercent,
+      yPercent: positions.logo.yPercent,
+      left: "50%",
+      ease: "power2.out",
+      duration: 1,
     });
 
-    // Animate the navigation to center
     tl.to(
       navigationRef.current,
       {
-        x: "150%",
-        y: 0,
-        ease: "power2.out", // Smooth easing
+        xPercent: positions.nav.xPercent,
+        yPercent: positions.nav.yPercent,
+        left: "50%",
+        transform: "translateX(-50%)",
+        ease: "power2.out",
         duration: 1,
         zIndex: 10,
       },
       "<"
     );
 
-    // Animate the landing image
     tl.to(
       landingImageRef.current,
       {
-        x: 10,
-        y: -550,
-        scale: 0.6,
-        ease: "power2.out", // Smooth easing
+        xPercent: positions.landing.xPercent,
+        yPercent: positions.landing.yPercent,
+        scale: positions.landing.scale,
+        left: "50%",
+        ease: "power2.out",
         duration: 1,
       },
       "<"
     );
-    tl.to(arrowRef.current, {
-      display: "none",
-    });
-
     // tl.to(navContainerRef.current, {
     //   position: "relative",
     // });
@@ -182,9 +221,9 @@ const Landing = () => {
 
   return (
     <div>
-      <div ref={containerRef} className="relative  h-screen ">
+      <div ref={containerRef} className="relative  h-screen w-full ">
         {/* Fixed Header */}
-        <div className="fixed top-0 left-0 right-0">
+        <div className="fixed top-0 left-0 right-0 w-full">
           <div ref={headerRef} className="w-full bg-[#0a0a0a] headerbg">
             <div className="headerbg lg:w-[100%] md:w-[100%] px-20 justify-between py-10 header sm:hidden hidden lg:flex md:flex items-center">
               {/* Logo Container */}
@@ -241,7 +280,7 @@ const Landing = () => {
                 </span>
               </button>
             </div>
-            <div className="w-[90%] mx-auto flex justify-between items-center my-10 header sm:flex lg:hidden md:hidden">
+            <div className="w-[100%] px-10 flex justify-between items-center py-10 header sm:flex lg:hidden md:hidden">
               {/* <div className="absolute top-3 left-1/2 transform -translate-x-1/2 -translate-y-10 z-0">
               <img src={nav} alt="Nav Background" className="w-64 h-auto z-0" />
             </div> */}
@@ -302,7 +341,7 @@ const Landing = () => {
           </div>
 
           {/* Hero Section with Animated Elements */}
-          <div className="w-[70%] mx-auto flex sm:my-[150px]  md:my-[150px] lg:my-[150px] my-[150px]  items-center flex-col relative">
+          <div className="w-[70%] mx-auto flex sm:my-[150px]  md:my-[100px] lg:my-[100px] my-[150px]  items-center flex-col relative">
             <div className="w-full">
               {" "}
               <img
@@ -312,7 +351,7 @@ const Landing = () => {
                 className="w-full"
               />
             </div>
-            <div className="absolute sm:top-2 top-2 md:top-6 lg:top-13 xl:top-20">
+            <div className="absolute sm:top-3 top-3 md:top-6 lg:top-13 xl:top-20">
               <img
                 ref={landingImageRef}
                 src={landing}
@@ -325,9 +364,9 @@ const Landing = () => {
 
         {/* Mobile Navigation */}
 
-        <div
+        {/* <div
           ref={arrowRef}
-          className="fixed right-5 bottom-10 md:right-10 md:bottom-20 z-50 flex flex-col items-center"
+          className="fixed right-5 bottom-10 md:right-10 md:bottom-20 z-50 flex flex-col items-center "
         >
           <div className="circular-text-container">
             <div className="scroll-arrow border border-white rounded-full p-2 md:p-3">
@@ -347,7 +386,7 @@ const Landing = () => {
               </svg>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

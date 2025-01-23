@@ -66,7 +66,7 @@ const Footer = () => {
         />
         <div className=" lg:mt-40 md:mt-40 mt-20 sm:mt-20 flex justify-between  flex-col">
           <div className="flex flex-col items-center justify-end  py-8">
-            <nav
+            {/* <nav
               ref={navRef}
               className="relative bg-[#181818F0] p-1 rounded-xl z-10"
               onMouseLeave={handleMouseLeave}
@@ -96,7 +96,7 @@ const Footer = () => {
                   </button>
                 ))}
               </div>
-            </nav>
+            </nav> */}
             <div className="lg:mt-20 md:mt-20 mt-10 sm:mt-10">
               {/* Logo */}
               <div className="lg:mb-8 md:mb-8 sm:mb-0 mb-0">

@@ -27,7 +27,7 @@ gsap.registerPlugin(ScrollTrigger);
 function Homepage() {
   return (
     <>
-      <div>
+      <div className="relative z-0">
         <Landing />
         <div className="relative -z-10">
           <div
@@ -474,16 +474,16 @@ function Homepage() {
               {/* Line connecting to bottom box */}
               {/* <div className="absolute bottom-[30%] right-[-100px] w-[100px] h-[2px] bg-[#C07AF6]"></div> */}
               {/* Line connecting to top box */}
-              <div className="absolute top-[25%] right-[-100px] flex items-center">
+              {/* <div className="absolute top-[25%] right-[-100px] flex items-center">
                 <div className="w-2 h-2 bg-white transform rotate-45"></div>
 
                 <div className="w-[100px] h-[2px] bg-white"></div>
-              </div>
+              </div> */}
               <div className="bg-[#141414] text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-sm mx-auto rounded-[30px] sm:hidden hidden lg:block md:block">
                 <div className="relative text-white p-8 max-w-sm mx-auto">
                   <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#C07AF6] rounded-tl-md"></div>
                   <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#C07AF6] rounded-br-md"></div>
-                  <div className="space-y-4">
+                  <div className="space-y-4 hidden sm:hidden ">
                     <img src={avs} alt={""} />
                   </div>
                 </div>
@@ -491,7 +491,7 @@ function Homepage() {
             </div>
 
             {/* Center img */}
-            <div className="lg:hidden md:hidden sm:block block">
+            <div className="lg:hidden md:hidden sm:hidden hidden">
               <img
                 src={eigen}
                 alt=""
