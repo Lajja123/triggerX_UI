@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useRef, useEffect } from "react";
+
 import chain from "../assets/chain.svg";
 import architect from "../assets/architect.svg";
 import architect2 from "../assets/architect2.svg";
@@ -25,13 +27,29 @@ import Landing from "./Landing";
 gsap.registerPlugin(ScrollTrigger);
 
 function Homepage() {
+  const nextGenRef = useRef(null);
+  const tl = gsap.timeline({
+    onComplete: () => {
+      gsap.set(nextGenRef.current, { opacity: 1, yPercent: -0 });
+    },
+  });
+  tl.to(
+    nextGenRef.current,
+
+    {
+      height: "100px",
+      opacity: 1,
+      duration: 1,
+      ease: "power2.out",
+    }
+  );
   return (
     <>
       <div className="relative z-0">
         <Landing />
         <div className="relative -z-10">
           <div
-            // ref={nextGenRef}
+            ref={nextGenRef}
             className="relative w-[90%] mx-auto lg:my-40 md:my-40 my-10 sm:my-10 "
           >
             <h1 className="relative text-center text-4xl sm:text-5xl md:text-5xl lg:text-7xl leading-[3rem] lg:leading-0 md:leading-12 sm:leading-15">
@@ -80,7 +98,7 @@ function Homepage() {
                   <span className="absolute inset-0 bg-white rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
                     {/* This is the white box that moves up */}
                   </span>
-                  <span className="relative z-10 px-6 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                  <span className="relative z-10 lg:px-6 md:px-6 sm:px-3 px-3 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
                     Create Job
                   </span>
                 </button>
@@ -91,7 +109,7 @@ function Homepage() {
                   <span className="absolute inset-0 bg-white rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
                     {/* This is the white box that moves up */}
                   </span>
-                  <span className="relative z-10 px-6 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                  <span className="relative z-10 lg:px-6 md:px-6 sm:px-3 px-3 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
                     Learn More
                   </span>
                 </button>

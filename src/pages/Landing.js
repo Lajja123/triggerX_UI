@@ -24,7 +24,7 @@ const Landing = () => {
   const headerRef = useRef(null);
   // const navContainerRef = useRef(null);
   const navigationRef = useRef(null);
-  const nextGenRef = useRef(null);
+
   const animationPlayed = useRef(false);
   const circularTextRef = useRef(null);
   const arrowRef = useRef(null);
@@ -33,6 +33,7 @@ const Landing = () => {
     { id: "home", path: "/", label: "Home" },
     { id: "create", path: "/create-job", label: "Create Job" },
     { id: "dashboard", path: "/dashboard", label: "Dashboard" },
+    { id: "docs", label: "Docs" },
   ];
 
   const isActiveRoute = (path) => location.pathname === path;
@@ -65,9 +66,10 @@ const Landing = () => {
 
       return {
         logo: {
-          width: Math.min(200, viewportWidth * 0.15), // 15% of viewport width, max 150px
+          width: Math.min(300), // Starting width
+
           xPercent: -50, // Center horizontally
-          yPercent: -700, // 20% from top
+          yPercent: -400, // 40% from top
           scale: 0.6,
         },
         nav: {
@@ -90,9 +92,9 @@ const Landing = () => {
         // Set final positions using calculated values
         gsap.set(mainLogoRef.current, {
           width: positions.logo.width,
+
           xPercent: positions.logo.xPercent,
           yPercent: positions.logo.yPercent,
-          left: "50%", // Center anchor point
         });
         gsap.set(navigationRef.current, {
           xPercent: positions.nav.xPercent,
@@ -104,10 +106,8 @@ const Landing = () => {
           xPercent: positions.landing.xPercent,
           yPercent: positions.landing.yPercent,
           scale: positions.landing.scale,
-          left: "50%",
         });
-        gsap.set(containerRef.current, { height: "200px" });
-        gsap.set(nextGenRef.current, { opacity: 1, yPercent: -20 });
+        gsap.set(containerRef.current, { height: "100px" });
       },
       scrollTrigger: {
         trigger: containerRef.current,
@@ -119,7 +119,6 @@ const Landing = () => {
 
     // Animate to final positions
     tl.to(mainLogoRef.current, {
-      width: positions.logo.width,
       xPercent: positions.logo.xPercent,
       yPercent: positions.logo.yPercent,
       left: "50%",
@@ -161,22 +160,13 @@ const Landing = () => {
     tl.to(
       containerRef.current,
       {
-        height: "200px",
+        height: "100px",
         duration: 1,
         ease: "power2.out",
       },
       0
     );
-    tl.to(
-      nextGenRef.current,
 
-      {
-        height: "100px",
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out",
-      }
-    );
     gsap.to(circularTextRef.current, {
       rotation: 360, // Full circle
       duration: 10, // Duration of one full rotation
@@ -223,9 +213,12 @@ const Landing = () => {
     <div>
       <div ref={containerRef} className="relative  h-screen w-full ">
         {/* Fixed Header */}
-        <div className="fixed top-0 left-0 right-0 w-full">
-          <div ref={headerRef} className="w-full bg-[#0a0a0a] headerbg">
-            <div className="headerbg lg:w-[100%] md:w-[100%] px-20 justify-between py-10 header sm:hidden hidden lg:flex md:flex items-center">
+        <div
+          ref={headerRef}
+          className="fixed top-0 left-0 right-0 w-full h-[100px]"
+        >
+          <div className="w-full bg-[#0a0a0a] headerbg">
+            <div className="headerbg lg:w-[100%] md:w-[100%] lg:px-20 md:px-10 sm:px-10 px-10 justify-between py-10 header sm:hidden hidden lg:flex md:flex items-center">
               {/* Logo Container */}
               <div className="w-[120px] opacity-0">
                 {/* <img
@@ -341,22 +334,22 @@ const Landing = () => {
           </div>
 
           {/* Hero Section with Animated Elements */}
-          <div className="w-[70%] mx-auto flex sm:my-[150px]  md:my-[100px] lg:my-[100px] my-[150px]  items-center flex-col relative">
-            <div className="w-full">
-              {" "}
+          <div className="w-[100%] px-20 flex sm:my-[150px]  md:my-[100px] lg:my-[100px] my-[150px]  items-center flex-col relative">
+            {/* <div className="w-full">
               <img
                 ref={mainLogoRef}
                 src={logo}
                 alt="TriggerX Logo"
                 className="w-full"
               />
-            </div>
-            <div className="absolute sm:top-3 top-3 md:top-6 lg:top-13 xl:top-20">
+            </div> */}
+
+            <div className="absolute sm:-top-20 -top-20 md:top-6 lg:top-10 xl:top-10">
               <img
                 ref={landingImageRef}
                 src={landing}
                 alt="Landing illustration"
-                className="lg:w-[500px] md:w-[400px] max-w-3xl sm:[250px] w-[250px]"
+                className="w-full"
               />
             </div>
           </div>
