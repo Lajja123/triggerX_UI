@@ -37,7 +37,6 @@ function Homepage() {
     nextGenRef.current,
 
     {
-      height: "100px",
       opacity: 1,
       duration: 1,
       ease: "power2.out",
@@ -501,7 +500,7 @@ function Homepage() {
                 <div className="relative text-white p-8 max-w-sm mx-auto">
                   <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#C07AF6] rounded-tl-md"></div>
                   <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#C07AF6] rounded-br-md"></div>
-                  <div className="space-y-4 hidden sm:hidden ">
+                  <div className="space-y-4  ">
                     <img src={avs} alt={""} />
                   </div>
                 </div>

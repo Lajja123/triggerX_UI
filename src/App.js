@@ -23,19 +23,19 @@ const App = () => {
 
   return (
     <Providers>
-      {loading ? (
+      {/* {loading ? (
         <Preloader />
-      ) : (
-        <Router>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/create-job" element={<CreateJobPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-            </Routes>
-          </Layout>
-        </Router>
-      )}
+      ) : ( */}
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/create-job" element={<CreateJobPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Routes>
+        </Layout>
+      </Router>
+      {/* )} */}
     </Providers>
   );
 };

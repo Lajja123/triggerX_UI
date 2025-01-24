@@ -24,7 +24,7 @@ const Landing = () => {
   const headerRef = useRef(null);
   // const navContainerRef = useRef(null);
   const navigationRef = useRef(null);
-
+  const [imageOpacity, setImageOpacity] = useState(1); // State for image opacity
   const animationPlayed = useRef(false);
   const circularTextRef = useRef(null);
   const arrowRef = useRef(null);
@@ -66,10 +66,10 @@ const Landing = () => {
 
       return {
         logo: {
-          width: Math.min(300), // Starting width
+          width: Math.min(200), // Starting width
 
-          xPercent: -50, // Center horizontally
-          yPercent: -400, // 40% from top
+          xPercent: -0, // Center horizontally
+          yPercent: -700, // 40% from top
           scale: 0.6,
         },
         nav: {
@@ -78,8 +78,8 @@ const Landing = () => {
         },
         landing: {
           xPercent: -0, // Center horizontally
-          yPercent: -100, // 40% from top
-          scale: 0.6,
+          yPercent: -95, // 40% from top
+          scale: 0.8,
         },
       };
     };
@@ -108,7 +108,14 @@ const Landing = () => {
           scale: positions.landing.scale,
         });
         gsap.set(containerRef.current, { height: "100px" });
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+          duration: 1.5, // Adjust duration as needed for desired smoothness
+          ease: "power4.inOut",
+        }); // Scroll smoothly back to top
       },
+
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
@@ -178,6 +185,31 @@ const Landing = () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
+
+  useEffect(() => {
+    // Function to handle scroll event
+    const handleScroll = () => {
+      if (animationPlayed.current && window.scrollY > 0) {
+        gsap.to(landingImageRef.current, {
+          opacity: 0,
+          duration: 0, // Short duration for fade out
+          ease: "power1.inOut",
+        });
+      } else {
+        gsap.to(landingImageRef.current, {
+          opacity: 1,
+          duration: 0.8, // Short duration for fade in
+          ease: "power1.inOut",
+        });
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [animationPlayed]);
 
   const handleMouseEnter = (event) => {
     const hoveredElement = event.currentTarget;
@@ -335,51 +367,29 @@ const Landing = () => {
 
           {/* Hero Section with Animated Elements */}
           <div className="w-[100%] px-20 flex sm:my-[150px]  md:my-[100px] lg:my-[100px] my-[150px]  items-center flex-col relative">
-            {/* <div className="w-full">
+            <div className="w-full">
               <img
                 ref={mainLogoRef}
                 src={logo}
                 alt="TriggerX Logo"
                 className="w-full"
               />
-            </div> */}
+            </div>
 
-            <div className="absolute sm:-top-20 -top-20 md:top-6 lg:top-10 xl:top-10">
+            <div className="absolute sm:top-10 top-10 md:top-6 lg:top-10 xl:top-20">
               <img
                 ref={landingImageRef}
                 src={landing}
                 alt="Landing illustration"
-                className="w-full"
+                className="xl:w-full lg:w-[500px] md:w-[400px] sm:w-[300px] w-[200px]"
+                style={{
+                  opacity: imageOpacity,
+                  transition: "opacity 0.3s ease",
+                }}
               />
             </div>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-
-        {/* <div
-          ref={arrowRef}
-          className="fixed right-5 bottom-10 md:right-10 md:bottom-20 z-50 flex flex-col items-center "
-        >
-          <div className="circular-text-container">
-            <div className="scroll-arrow border border-white rounded-full p-2 md:p-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 md:h-8 md:w-8 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17 13l-5 5m0 0l-5-5m5 5V6"
-                />
-              </svg>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );
