@@ -16,13 +16,19 @@ const Landing = () => {
   const navRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const navMobileRef = useRef(null);
+  const navMobileMRef = useRef(null);
 
   const landingImageRef = useRef(null);
+  const landingImageMRef = useRef(null);
   const logoRef = useRef(null);
   const mainLogoRef = useRef(null);
   const containerRef = useRef(null);
+  const headerMRef = useRef(null);
+  const mainLogoMRef = useRef(null);
+  const containerMRef = useRef(null);
   const headerRef = useRef(null);
-  // const navContainerRef = useRef(null);
+  const navigationMRef = useRef(null);
   const navigationRef = useRef(null);
   const [imageOpacity, setImageOpacity] = useState(1); // State for image opacity
   const animationPlayed = useRef(false);
@@ -40,46 +46,57 @@ const Landing = () => {
   useEffect(() => {
     if (animationPlayed.current) return;
 
-    // Initial setup with viewport-relative positioning
+    // Initial setup (using x and y now)
     gsap.set(mainLogoRef.current, {
-      width: "100%",
-      xPercent: 0,
-      yPercent: 0,
+      x: 0,
+      y: 0,
     });
 
     gsap.set(landingImageRef.current, {
-      xPercent: 0,
-      yPercent: 0,
+      x: 0,
+      y: 0,
       scale: 1,
     });
 
     gsap.set(navigationRef.current, {
-      xPercent: 0,
-      yPercent: 0,
+      x: 0,
+      y: 0,
       scale: 1,
     });
 
-    // Create a function to calculate viewport-based positions
+    gsap.set(navMobileRef.current, {
+      x: 0,
+      y: 0,
+      scale: 1,
+    });
+
+    // Calculate absolute pixel positions
     const calculatePositions = () => {
+      const logoElement = mainLogoRef.current;
+      const navElement = navigationRef.current;
+      const landingElement = landingImageRef.current;
+      const navMobileElement = navMobileRef.current;
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
       return {
         logo: {
-          width: Math.min(200), // Starting width
-
-          xPercent: -0, // Center horizontally
-          yPercent: -700, // 40% from top
-          scale: 0.6,
+          width: 200, // Setting a width to make x and y values easier to calculate
+          x: viewportWidth * -0, // Centering and adding offset from center
+          y: -170, // 70% of the way down
         },
         nav: {
-          xPercent: -50, // Center
-          yPercent: -0, // 30% from top
+          x: viewportWidth * -0, // Center
+          y: viewportHeight * -0, // 30% from top
         },
         landing: {
-          xPercent: -0, // Center horizontally
-          yPercent: -95, // 40% from top
+          x: viewportWidth * -0,
+          y: viewportHeight * -0.6,
           scale: 0.8,
+        },
+        mobile: {
+          x: viewportWidth * -0, // Center
+          y: viewportHeight * -0, // 30% from top
         },
       };
     };
@@ -90,23 +107,6 @@ const Landing = () => {
       onComplete: () => {
         animationPlayed.current = true;
         // Set final positions using calculated values
-        gsap.set(mainLogoRef.current, {
-          width: positions.logo.width,
-
-          xPercent: positions.logo.xPercent,
-          yPercent: positions.logo.yPercent,
-        });
-        gsap.set(navigationRef.current, {
-          xPercent: positions.nav.xPercent,
-          yPercent: positions.nav.yPercent,
-          left: "50%",
-          transform: "translateX(-50%)", // Center the navigation
-        });
-        gsap.set(landingImageRef.current, {
-          xPercent: positions.landing.xPercent,
-          yPercent: positions.landing.yPercent,
-          scale: positions.landing.scale,
-        });
         gsap.set(containerRef.current, { height: "100px" });
         window.scrollTo({
           top: 0,
@@ -126,9 +126,10 @@ const Landing = () => {
 
     // Animate to final positions
     tl.to(mainLogoRef.current, {
-      xPercent: positions.logo.xPercent,
-      yPercent: positions.logo.yPercent,
-      left: "50%",
+      width: positions.logo.width, // Animate the width
+      x: positions.logo.x,
+      y: positions.logo.y,
+      left: "50%", // Need to center the element as the width is fixed
       ease: "power2.out",
       duration: 1,
     });
@@ -136,9 +137,9 @@ const Landing = () => {
     tl.to(
       navigationRef.current,
       {
-        xPercent: positions.nav.xPercent,
-        yPercent: positions.nav.yPercent,
-        left: "50%",
+        x: positions.nav.x,
+        y: positions.nav.y,
+        left: "50%", // Keep centering
         transform: "translateX(-50%)",
         ease: "power2.out",
         duration: 1,
@@ -150,8 +151,8 @@ const Landing = () => {
     tl.to(
       landingImageRef.current,
       {
-        xPercent: positions.landing.xPercent,
-        yPercent: positions.landing.yPercent,
+        x: positions.landing.x,
+        y: positions.landing.y,
         scale: positions.landing.scale,
         left: "50%",
         ease: "power2.out",
@@ -159,11 +160,20 @@ const Landing = () => {
       },
       "<"
     );
-    // tl.to(navContainerRef.current, {
-    //   position: "relative",
-    // });
+    tl.to(
+      navMobileRef.current,
+      {
+        x: positions.nav.x,
+        y: positions.nav.y,
+        left: "50%", // Keep centering
+        transform: "translateX(-50%)",
+        ease: "power2.out",
+        duration: 1,
+        zIndex: 10,
+      },
+      "<"
+    );
 
-    // Container height and nextGen animation
     tl.to(
       containerRef.current,
       {
@@ -175,11 +185,144 @@ const Landing = () => {
     );
 
     gsap.to(circularTextRef.current, {
-      rotation: 360, // Full circle
-      duration: 10, // Duration of one full rotation
-      repeat: -1, // Infinite loop
-      ease: "linear", // Smooth continuous rotation
+      rotation: 360,
+      duration: 10,
+      repeat: -1,
+      ease: "linear",
     });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+  useEffect(() => {
+    if (animationPlayed.current) return;
+
+    // Initial setup (using x and y now)
+    gsap.set(mainLogoMRef.current, {
+      x: 0,
+      y: 0,
+    });
+
+    gsap.set(landingImageMRef.current, {
+      x: 0,
+      y: 0,
+      scale: 1,
+    });
+
+    gsap.set(navigationMRef.current, {
+      x: 0,
+      y: 0,
+      scale: 1,
+    });
+
+    gsap.set(navMobileMRef.current, {
+      x: 0,
+      y: 0,
+      scale: 1,
+    });
+
+    // Calculate absolute pixel positions
+    const calculatePositions = () => {
+      const logoElement = mainLogoMRef.current;
+      const navElement = navigationMRef.current;
+      const landingElement = landingImageMRef.current;
+      const navMobileElement = navMobileMRef.current;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      return {
+        logo: {
+          width: 130, // Setting a width to make x and y values easier to calculate
+          x: -40, // Centering and adding offset from center
+          y: -165, // 70% of the way down
+        },
+        nav: {
+          x: viewportWidth * -0, // Center
+          y: viewportHeight * -0, // 30% from top
+        },
+        landing: {
+          width: 300,
+          x: viewportWidth * -0,
+          y: -355,
+          scale: 0.8,
+        },
+      };
+    };
+
+    const positions = calculatePositions();
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        animationPlayed.current = true;
+        // Set final positions using calculated values
+        gsap.set(containerMRef.current, { height: "100px" });
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+          duration: 1.5, // Adjust duration as needed for desired smoothness
+          ease: "power4.inOut",
+        }); // Scroll smoothly back to top
+      },
+
+      scrollTrigger: {
+        trigger: containerMRef.current,
+        start: "top top",
+        end: "+=200",
+        once: true,
+      },
+    });
+
+    // Animate to final positions
+    tl.to(mainLogoMRef.current, {
+      width: positions.logo.width, // Animate the width
+      x: positions.logo.x,
+      y: positions.logo.y,
+
+      ease: "power2.out",
+      duration: 1,
+      zIndex: 10,
+      position: "relative",
+    });
+
+    tl.to(
+      navigationMRef.current,
+      {
+        x: positions.nav.x,
+        y: positions.nav.y,
+        left: "50%", // Keep centering
+        transform: "translateX(-50%)",
+        ease: "power2.out",
+        duration: 1,
+        zIndex: 10,
+      },
+      "<"
+    );
+
+    tl.to(
+      landingImageMRef.current,
+      {
+        width: positions.landing.width, // Animate the width
+
+        x: positions.landing.x,
+        y: positions.landing.y,
+        scale: positions.landing.scale,
+        left: "50%",
+        ease: "power2.out",
+        duration: 1,
+      },
+      "<"
+    );
+
+    tl.to(
+      containerMRef.current,
+      {
+        height: "100px",
+        duration: 1,
+        ease: "power2.out",
+      },
+      0
+    );
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -243,23 +386,19 @@ const Landing = () => {
 
   return (
     <div>
-      <div ref={containerRef} className="relative  h-screen w-full ">
+      <div
+        ref={containerRef}
+        className="relative  h-screen w-full hidden sm:hidden md:hidden lg:block xl:block"
+      >
         {/* Fixed Header */}
         <div
           ref={headerRef}
           className="fixed top-0 left-0 right-0 w-full h-[100px]"
         >
           <div className="w-full bg-[#0a0a0a] headerbg">
-            <div className="headerbg lg:w-[100%] md:w-[100%] lg:px-20 md:px-10 sm:px-10 px-10 justify-between py-10 header sm:hidden hidden lg:flex md:flex items-center">
+            <div className="headerbg lg:w-[100%] md:w-[100%] lg:px-20 md:px-10 sm:px-10 px-10 justify-between py-10 header sm:hidden hidden lg:flex md:hidden items-center">
               {/* Logo Container */}
-              <div className="w-[120px] opacity-0">
-                {/* <img
-                ref={logoRef}
-                src={logo}
-                alt="TriggerX Logo"
-                className="w-full"
-              /> */}
-              </div>
+              <div className="w-[120px] opacity-0"></div>
 
               {/* Navigation Container - Now positioned absolutely for animation */}
               <div ref={navigationRef} className="absolute left-1/6   z-100 ">
@@ -305,13 +444,13 @@ const Landing = () => {
                 </span>
               </button>
             </div>
-            <div className="w-[100%] px-10 flex justify-between items-center py-10 header sm:flex lg:hidden md:hidden">
+            <div className="w-[100%] px-10 flex justify-between items-center py-10 header sm:flex lg:hidden md:flex">
               {/* <div className="absolute top-3 left-1/2 transform -translate-x-1/2 -translate-y-10 z-0">
               <img src={nav} alt="Nav Background" className="w-64 h-auto z-0" />
             </div> */}
-              <div className="flex-shrink-0 relative z-10">
+              <div className="flex-shrink-0 relative z-10 " ref={navMobileRef}>
                 {/* <img src={logo} alt="Logo" width={150} /> */}
-                <div className="lg:hidden">
+                <div className="lg:hidden ">
                   <h4
                     onClick={() => setMenuOpen(!menuOpen)}
                     className="text-white text-2xl cursor-pointer"
@@ -376,12 +515,112 @@ const Landing = () => {
               />
             </div>
 
-            <div className="absolute sm:top-10 top-10 md:top-6 lg:top-10 xl:top-20">
+            <div className="absolute sm:top-10 top-0 md:top-6 lg:top-10 xl:top-20">
               <img
                 ref={landingImageRef}
                 src={landing}
                 alt="Landing illustration"
-                className="xl:w-full lg:w-[500px] md:w-[400px] sm:w-[300px] w-[200px]"
+                style={{
+                  opacity: imageOpacity,
+                  transition: "opacity 0.3s ease",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        ref={containerMRef}
+        className="relative  h-screen w-full  sm:block md:block lg:hidden xl:hidden block"
+      >
+        {/* Fixed Header */}
+        <div
+          ref={headerMRef}
+          className="fixed top-0 left-0 right-0 w-full h-[100px]"
+        >
+          <div className="w-full bg-[#0a0a0a] headerbg">
+            <div className="w-[100%] px-10 flex justify-end gap-3 items-center py-10 header sm:flex lg:hidden md:flex">
+              {/* <div className="absolute top-3 left-1/2 transform -translate-x-1/2 -translate-y-10 z-0">
+              <img src={nav} alt="Nav Background" className="w-64 h-auto z-0" />
+            </div> */}
+
+              <div className="relative  items-center gap-5 ">
+                <div className="flex-shrink-0 relative z-10 text-sm sm:hidden hidden md:flex">
+                  <ConnectButton />
+                </div>
+              </div>
+              <div className="flex-shrink-0 relative z-10 " ref={navMobileMRef}>
+                <div className="lg:hidden ">
+                  <h4
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className="text-white text-2xl cursor-pointer"
+                  >
+                    {menuOpen ? "✖" : "☰"}
+                  </h4>
+                  {menuOpen && (
+                    <div className="absolute top-full right-0 mt-3 bg-[#181818] p-4 rounded-md shadow-lg z-10">
+                      <nav
+                        ref={navRef}
+                        className="relative"
+                        onMouseLeave={handleMouseLeave}
+                      >
+                        <div
+                          className="absolute bg-gradient-to-r from-[#D9D9D924] to-[#14131324] rounded-xl border border-[#4B4A4A] opacity-0"
+                          style={highlightStyle}
+                        />
+                        <div className="flex flex-col gap-4">
+                          {navItems.map((item) => (
+                            <button
+                              key={item.id}
+                              onClick={() => {
+                                navigate(item.path);
+                                setMenuOpen(false);
+                              }}
+                              onMouseEnter={handleMouseEnter}
+                              className={`
+                       md:w-[150px] px-7 py-3 rounded-xl
+                          relative z-10 cursor-pointer
+                          ${
+                            isActiveRoute(item.path)
+                              ? "text-white"
+                              : "text-gray-400"
+                          }
+                        `}
+                            >
+                              {item.label}
+                            </button>
+                          ))}
+                          <div className="relative  items-center gap-5 sm:flex flex md:hidden">
+                            <div className="flex-shrink-0 relative z-10 text-sm ">
+                              <ConnectButton />
+                            </div>
+                          </div>
+                        </div>
+                      </nav>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Hero Section with Animated Elements */}
+          <div className="w-[100%] px-20 flex sm:my-[100px]  md:my-[100px] lg:my-[100px] my-[100px]  items-center flex-col relative">
+            <div className="w-full relative">
+              <img
+                ref={mainLogoMRef}
+                src={logo}
+                alt="TriggerX Logo"
+                className="w-full"
+              />
+            </div>
+
+            <div className="absolute sm:top-10 top-2 md:top-6 lg:top-10 xl:top-20">
+              <img
+                ref={landingImageMRef}
+                src={landing}
+                alt="Landing illustration"
+                className="md:w-[450px] sm:w-[250px] w-[250px]"
                 style={{
                   opacity: imageOpacity,
                   transition: "opacity 0.3s ease",

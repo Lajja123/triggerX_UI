@@ -49,7 +49,7 @@ function Homepage() {
         <div className="relative -z-10">
           <div
             ref={nextGenRef}
-            className="relative w-[90%] mx-auto lg:my-40 md:my-40 my-10 sm:my-10 "
+            className="relative w-[90%] mx-auto lg:my-40 md:my-40 my-20 sm:my-20 "
           >
             <h1 className="relative text-center text-4xl sm:text-5xl md:text-5xl lg:text-7xl leading-[3rem] lg:leading-0 md:leading-12 sm:leading-15">
               Next-Gen Blockchain
