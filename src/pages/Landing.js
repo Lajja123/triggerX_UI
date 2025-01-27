@@ -19,6 +19,8 @@ const Landing = () => {
   const navMobileRef = useRef(null);
   const navMobileMRef = useRef(null);
   const [animationCompleted, setAnimationCompleted] = useState(false);
+  const [MobileAnimationCompleted, setMobileAnimationCompleted] =
+    useState(false);
 
   const landingImageRef = useRef(null);
   const landingImageMRef = useRef(null);
@@ -67,9 +69,9 @@ const Landing = () => {
           y: viewportHeight * -0,
         },
         landing: {
+          width: 500,
           x: viewportWidth * -0,
-          y: viewportHeight * -0.6,
-          scale: 0.8,
+          y: -480,
         },
         mobile: {
           x: viewportWidth * -0,
@@ -91,7 +93,6 @@ const Landing = () => {
       {
         x: 0,
         y: 0,
-        scale: 1,
       }
     );
 
@@ -130,9 +131,9 @@ const Landing = () => {
     tl.to(
       landingImageRef.current,
       {
+        width: positions.landing.width,
         x: positions.landing.x,
         y: positions.landing.y,
-        scale: positions.landing.scale,
         left: "50%",
         ease: "power2.out",
         duration: 1,
@@ -171,6 +172,151 @@ const Landing = () => {
       repeat: -1,
       ease: "linear",
     });
+  };
+
+  const playMobileAnimation = () => {
+    if (animationPlayed.current) return;
+
+    setTimeout(() => {
+      console.log("Animation completed");
+      window.scrollTo(0, 0); // Reset scroll position to top
+    }, 0); // Adjust duration to your animation's timing
+    // Calculate positions
+
+    const calculatePositions = () => {
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      return {
+        logo: {
+          width: 130, // Setting a width to make x and y values easier to calculate
+          x: -58, // Centering and adding offset from center
+          y: -165, // 70% of the way down
+        },
+        nav: {
+          x: viewportWidth * -0, // Center
+          y: viewportHeight * -0, // 30% from top
+        },
+        landing: {
+          width: 300,
+          x: viewportWidth * -0,
+          y: -355,
+          scale: 0.8,
+        },
+      };
+    };
+
+    const positions = calculatePositions();
+
+    // Initial setup
+    gsap.set(
+      [
+        mainLogoMRef.current,
+        landingImageMRef.current,
+        navigationMRef.current,
+        navMobileMRef.current,
+      ],
+      {
+        x: 0,
+        y: 0,
+        scale: 1,
+      }
+    );
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        animationPlayed.current = true;
+        setMobileAnimationCompleted(true);
+        gsap.set(containerMRef.current, { height: "100px" });
+      },
+    });
+
+    // Animation sequence
+    // Animate to final positions
+    tl.to(mainLogoMRef.current, {
+      width: positions.logo.width, // Animate the width
+      x: positions.logo.x,
+      y: positions.logo.y,
+
+      ease: "power2.out",
+      duration: 1,
+      zIndex: 10,
+      position: "relative",
+    });
+
+    tl.to(
+      navigationMRef.current,
+      {
+        x: positions.nav.x,
+        y: positions.nav.y,
+        left: "50%", // Keep centering
+        transform: "translateX(-50%)",
+        ease: "power2.out",
+        duration: 1,
+        zIndex: 10,
+      },
+      "<"
+    );
+
+    tl.to(
+      landingImageMRef.current,
+      {
+        width: positions.landing.width, // Animate the width
+
+        x: positions.landing.x,
+        y: positions.landing.y,
+        scale: positions.landing.scale,
+        left: "50%",
+        ease: "power2.out",
+        duration: 1,
+      },
+      "<"
+    );
+
+    tl.to(
+      containerMRef.current,
+      {
+        height: "100px",
+        duration: 1,
+        ease: "power2.out",
+      },
+      0
+    );
+  };
+
+  useEffect(() => {
+    // Event listeners for different triggers
+    const handleScroll = () => {
+      playMobileAnimation();
+    };
+
+    const handleClick = () => {
+      playMobileAnimation();
+    };
+
+    const handleKeyPress = (event) => {
+      // You can specify certain keys or remove this condition to trigger on any key
+      if (event.key === "Enter") {
+        playMobileAnimation();
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("click", handleClick);
+    document.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleClick);
+      document.removeEventListener("keydown", handleKeyPress);
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
+  const handleArrowDown = () => {
+    playAnimation();
   };
 
   useEffect(() => {
@@ -451,64 +597,6 @@ const Landing = () => {
                 </span>
               </button>
             </div>
-            <div className="w-[100%] px-10 flex justify-between items-center py-10 header sm:flex lg:hidden md:flex">
-              {/* <div className="absolute top-3 left-1/2 transform -translate-x-1/2 -translate-y-10 z-0">
-              <img src={nav} alt="Nav Background" className="w-64 h-auto z-0" />
-            </div> */}
-              <div className="flex-shrink-0 relative z-10 " ref={navMobileRef}>
-                {/* <img src={logo} alt="Logo" width={150} /> */}
-                <div className="lg:hidden ">
-                  <h4
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    className="text-white text-2xl cursor-pointer"
-                  >
-                    {menuOpen ? "✖" : "☰"}
-                  </h4>
-                  {menuOpen && (
-                    <div className="absolute top-full left-0 mt-3 bg-[#181818] p-4 rounded-md shadow-lg z-10">
-                      <nav
-                        ref={navRef}
-                        className="relative"
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        <div
-                          className="absolute bg-gradient-to-r from-[#D9D9D924] to-[#14131324] rounded-xl border border-[#4B4A4A] opacity-0"
-                          style={highlightStyle}
-                        />
-                        <div className="flex flex-col gap-4">
-                          {navItems.map((item) => (
-                            <button
-                              key={item.id}
-                              onClick={() => {
-                                navigate(item.path);
-                                setMenuOpen(false);
-                              }}
-                              onMouseEnter={handleMouseEnter}
-                              className={`
-                          lg:w-[135px] md:w-[100px] px-7 py-3 rounded-xl
-                          relative z-10 cursor-pointer
-                          ${
-                            isActiveRoute(item.path)
-                              ? "text-white"
-                              : "text-gray-400"
-                          }
-                        `}
-                            >
-                              {item.label}
-                            </button>
-                          ))}
-                        </div>
-                      </nav>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="relative flex items-center gap-5">
-                <div className="flex-shrink-0 relative z-10">
-                  <ConnectButton />
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Hero Section with Animated Elements */}
@@ -527,6 +615,7 @@ const Landing = () => {
                 ref={landingImageRef}
                 src={landing}
                 alt="Landing illustration"
+                className="xl:w-[650px] lg:w=[500px] md:w-[400px]"
                 style={{
                   opacity: imageOpacity,
                   transition: "opacity 0.3s ease",
@@ -537,7 +626,7 @@ const Landing = () => {
           {!animationCompleted && (
             <div
               ref={arrowRef}
-              onClick={handleArrowClick}
+              onClick={handleArrowDown}
               className="fixed right-5 bottom-10 md:right-10 md:bottom-20 z-50 flex flex-col items-center"
             >
               <div className="circular-text-container">
@@ -661,32 +750,32 @@ const Landing = () => {
               />
             </div>
           </div>
-        </div>
-        {!animationCompleted && (
-          <div
-            ref={arrowRef}
-            onClick={handleArrowClick}
-            className="fixed sm:right-[20rem] right-[10rem] bottom-10 md:right-30 md:bottom-20 z-50 flex flex-col items-center"
-          >
-            <div className="scroll-arrow circular-text-container flex items-center flex-col ">
-              <div className=" border-none  p-2 md:p-3">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10.0001 10.7918L5.47925 14.021C5.20147 14.2154 4.91341 14.2396 4.61508 14.0935C4.31675 13.9474 4.1673 13.701 4.16675 13.3543C4.16675 13.2154 4.19814 13.0835 4.26091 12.9585C4.32369 12.8335 4.41036 12.7362 4.52091 12.6668L10.0001 8.75014L15.4792 12.6668C15.5904 12.7362 15.6773 12.8335 15.7401 12.9585C15.8029 13.0835 15.834 13.2154 15.8334 13.3543C15.8334 13.6876 15.6842 13.9307 15.3859 14.0835C15.0876 14.2362 14.7992 14.2154 14.5209 14.021L10.0001 10.7918ZM10.0001 5.83347L5.47925 9.06264C5.20147 9.25708 4.91341 9.28153 4.61508 9.13597C4.31675 8.99041 4.1673 8.74347 4.16675 8.39514C4.16675 8.25625 4.19814 8.1243 4.26091 7.9993C4.32369 7.8743 4.41036 7.77708 4.52091 7.70764L10.0001 3.7918L15.4792 7.70847C15.5904 7.77791 15.6773 7.87514 15.7401 8.00014C15.8029 8.12514 15.834 8.25708 15.8334 8.39597C15.8334 8.7293 15.6842 8.97236 15.3859 9.12514C15.0876 9.27791 14.7992 9.25708 14.5209 9.06264L10.0001 5.83347Z"
-                    fill="white"
-                  />
-                </svg>
+          {!MobileAnimationCompleted && (
+            <div
+              ref={arrowRef}
+              onClick={handleArrowClick}
+              className="fixed inset-x-0 bottom-10 z-50 flex flex-col items-center"
+            >
+              <div className="scroll-arrow circular-text-container flex items-center flex-col ">
+                <div className="border-none p-2 md:p-3">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.0001 10.7918L5.47925 14.021C5.20147 14.2154 4.91341 14.2396 4.61508 14.0935C4.31675 13.9474 4.1673 13.701 4.16675 13.3543C4.16675 13.2154 4.19814 13.0835 4.26091 12.9585C4.32369 12.8335 4.41036 12.7362 4.52091 12.6668L10.0001 8.75014L15.4792 12.6668C15.5904 12.7362 15.6773 12.8335 15.7401 12.9585C15.8029 13.0835 15.834 13.2154 15.8334 13.3543C15.8334 13.6876 15.6842 13.9307 15.3859 14.0835C15.0876 14.2362 14.7992 14.2154 14.5209 14.021L10.0001 10.7918ZM10.0001 5.83347L5.47925 9.06264C5.20147 9.25708 4.91341 9.28153 4.61508 9.13597C4.31675 8.99041 4.1673 8.74347 4.16675 8.39514C4.16675 8.25625 4.19814 8.1243 4.26091 7.9993C4.32369 7.8743 4.41036 7.77708 4.52091 7.70764L10.0001 3.7918L15.4792 7.70847C15.5904 7.77791 15.6773 7.87514 15.7401 8.00014C15.8029 8.12514 15.834 8.25708 15.8334 8.39597C15.8334 8.7293 15.6842 8.97236 15.3859 9.12514C15.0876 9.27791 14.7992 9.25708 14.5209 9.06264L10.0001 5.83347Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
+                <div>Swipe Up</div>
               </div>
-              <div>Swipe Up</div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
