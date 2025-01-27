@@ -402,7 +402,7 @@ const Landing = () => {
         },
         landing: {
           width: 300,
-          x: viewportWidth * -0,
+          x: 0,
           y: -355,
           scale: 0.8,
         },
