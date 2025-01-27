@@ -290,27 +290,13 @@ const Landing = () => {
       playMobileAnimation();
     };
 
-    const handleClick = () => {
-      playMobileAnimation();
-    };
-
-    const handleKeyPress = (event) => {
-      // You can specify certain keys or remove this condition to trigger on any key
-      if (event.key === "Enter") {
-        playMobileAnimation();
-      }
-    };
-
     // Add event listeners
     window.addEventListener("scroll", handleScroll);
-    document.addEventListener("click", handleClick);
-    document.addEventListener("keydown", handleKeyPress);
 
     // Cleanup
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("click", handleClick);
-      document.removeEventListener("keydown", handleKeyPress);
+
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
