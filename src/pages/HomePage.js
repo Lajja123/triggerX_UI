@@ -46,15 +46,15 @@ function Homepage() {
     <>
       <div className="relative z-0">
         <Landing />
-        <div className="relative -z-10">
+        <div ref={nextGenRef} className="relative -z-10">
           <div
-            ref={nextGenRef}
-            className="relative w-[90%] mx-auto lg:my-40 md:my-40 my-20 sm:my-20 "
+            className=" w-[90%] mx-auto lg:my-40 md:my-40 my-20 sm:my-20 "
+            id="target-section"
           >
-            <h1 className="relative text-center text-4xl sm:text-5xl md:text-5xl lg:text-7xl leading-[3rem] lg:leading-0 md:leading-12 sm:leading-15">
+            <h1 className=" text-center text-4xl sm:text-5xl md:text-5xl lg:text-7xl leading-[3rem] lg:leading-0 md:leading-12 sm:leading-15">
               Next-Gen Blockchain
             </h1>
-            <h1 className="relative text-center text-4xl sm:text-5xl md:text-5xl lg:text-7xl lg:mt-3 md:mt-3 sm:mt-0 mt-0 leading-[3rem] lg:leading-0 md:leading-0 sm:leading-15">
+            <h1 className=" text-center text-4xl sm:text-5xl md:text-5xl lg:text-7xl lg:mt-3 md:mt-3 sm:mt-0 mt-0 leading-[3rem] lg:leading-0 md:leading-0 sm:leading-15">
               Automation
             </h1>
             <div className="bg-[#FCFCFC] rounded-2xl lg:px-8 lg:py-4  md:px-8 md:py-4  px-5 py-3 flex items-center justify-center gap-4 shadow-md  mx-auto mt-8 min-w-min w-[300px]">

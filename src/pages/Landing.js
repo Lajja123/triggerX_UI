@@ -18,6 +18,7 @@ const Landing = () => {
   const location = useLocation();
   const navMobileRef = useRef(null);
   const navMobileMRef = useRef(null);
+  const [animationCompleted, setAnimationCompleted] = useState(false);
 
   const landingImageRef = useRef(null);
   const landingImageMRef = useRef(null);
@@ -43,51 +44,27 @@ const Landing = () => {
   ];
 
   const isActiveRoute = (path) => location.pathname === path;
-  useEffect(() => {
+
+  const playAnimation = () => {
     if (animationPlayed.current) return;
-
-    // Initial setup (using x and y now)
-    gsap.set(mainLogoRef.current, {
-      x: 0,
-      y: 0,
-    });
-
-    gsap.set(landingImageRef.current, {
-      x: 0,
-      y: 0,
-      scale: 1,
-    });
-
-    gsap.set(navigationRef.current, {
-      x: 0,
-      y: 0,
-      scale: 1,
-    });
-
-    gsap.set(navMobileRef.current, {
-      x: 0,
-      y: 0,
-      scale: 1,
-    });
-
-    // Calculate absolute pixel positions
+    setTimeout(() => {
+      console.log("Animation completed");
+      window.scrollTo(0, 0); // Reset scroll position to top
+    }, 0); // Adjust duration to your animation's timing
+    // Calculate positions
     const calculatePositions = () => {
-      const logoElement = mainLogoRef.current;
-      const navElement = navigationRef.current;
-      const landingElement = landingImageRef.current;
-      const navMobileElement = navMobileRef.current;
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
       return {
         logo: {
-          width: 200, // Setting a width to make x and y values easier to calculate
-          x: viewportWidth * -0, // Centering and adding offset from center
-          y: -170, // 70% of the way down
+          width: 200,
+          x: viewportWidth * -0,
+          y: -170,
         },
         nav: {
-          x: viewportWidth * -0, // Center
-          y: viewportHeight * -0, // 30% from top
+          x: viewportWidth * -0,
+          y: viewportHeight * -0,
         },
         landing: {
           x: viewportWidth * -0,
@@ -95,41 +72,43 @@ const Landing = () => {
           scale: 0.8,
         },
         mobile: {
-          x: viewportWidth * -0, // Center
-          y: viewportHeight * -0, // 30% from top
+          x: viewportWidth * -0,
+          y: viewportHeight * -0,
         },
       };
     };
 
     const positions = calculatePositions();
 
+    // Initial setup
+    gsap.set(
+      [
+        mainLogoRef.current,
+        landingImageRef.current,
+        navigationRef.current,
+        navMobileRef.current,
+      ],
+      {
+        x: 0,
+        y: 0,
+        scale: 1,
+      }
+    );
+
     const tl = gsap.timeline({
       onComplete: () => {
         animationPlayed.current = true;
-        // Set final positions using calculated values
+        setAnimationCompleted(true);
         gsap.set(containerRef.current, { height: "100px" });
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-          duration: 1.5, // Adjust duration as needed for desired smoothness
-          ease: "power4.inOut",
-        }); // Scroll smoothly back to top
-      },
-
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "+=200",
-        once: true,
       },
     });
 
-    // Animate to final positions
+    // Animation sequence
     tl.to(mainLogoRef.current, {
-      width: positions.logo.width, // Animate the width
+      width: positions.logo.width,
       x: positions.logo.x,
       y: positions.logo.y,
-      left: "50%", // Need to center the element as the width is fixed
+      left: "50%",
       ease: "power2.out",
       duration: 1,
     });
@@ -139,7 +118,7 @@ const Landing = () => {
       {
         x: positions.nav.x,
         y: positions.nav.y,
-        left: "50%", // Keep centering
+        left: "50%",
         transform: "translateX(-50%)",
         ease: "power2.out",
         duration: 1,
@@ -160,12 +139,13 @@ const Landing = () => {
       },
       "<"
     );
+
     tl.to(
       navMobileRef.current,
       {
         x: positions.nav.x,
         y: positions.nav.y,
-        left: "50%", // Keep centering
+        left: "50%",
         transform: "translateX(-50%)",
         ease: "power2.out",
         duration: 1,
@@ -184,17 +164,50 @@ const Landing = () => {
       0
     );
 
+    // Continuous rotation animation
     gsap.to(circularTextRef.current, {
       rotation: 360,
       duration: 10,
       repeat: -1,
       ease: "linear",
     });
+  };
 
+  useEffect(() => {
+    // Event listeners for different triggers
+    const handleScroll = () => {
+      playAnimation();
+    };
+
+    const handleClick = () => {
+      playAnimation();
+    };
+
+    const handleKeyPress = (event) => {
+      // You can specify certain keys or remove this condition to trigger on any key
+      if (event.key === "Enter") {
+        playAnimation();
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("click", handleClick);
+    document.addEventListener("keydown", handleKeyPress);
+
+    // Cleanup
     return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleClick);
+      document.removeEventListener("keydown", handleKeyPress);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
+
+  const handleArrowClick = () => {
+    playAnimation();
+  };
+
   useEffect(() => {
     if (animationPlayed.current) return;
 
@@ -234,7 +247,7 @@ const Landing = () => {
       return {
         logo: {
           width: 130, // Setting a width to make x and y values easier to calculate
-          x: -40, // Centering and adding offset from center
+          x: -58, // Centering and adding offset from center
           y: -165, // 70% of the way down
         },
         nav: {
@@ -257,18 +270,12 @@ const Landing = () => {
         animationPlayed.current = true;
         // Set final positions using calculated values
         gsap.set(containerMRef.current, { height: "100px" });
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-          duration: 1.5, // Adjust duration as needed for desired smoothness
-          ease: "power4.inOut",
-        }); // Scroll smoothly back to top
       },
 
       scrollTrigger: {
         trigger: containerMRef.current,
         start: "top top",
-        end: "+=200",
+        end: "+=100",
         once: true,
       },
     });
@@ -527,6 +534,32 @@ const Landing = () => {
               />
             </div>
           </div>
+          {!animationCompleted && (
+            <div
+              ref={arrowRef}
+              onClick={handleArrowClick}
+              className="fixed right-5 bottom-10 md:right-10 md:bottom-20 z-50 flex flex-col items-center"
+            >
+              <div className="circular-text-container">
+                <div className="scroll-arrow border border-white rounded-full p-2 md:p-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 md:h-8 md:w-8 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17 13l-5 5m0 0l-5-5m5 5V6"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div
@@ -615,7 +648,7 @@ const Landing = () => {
               />
             </div>
 
-            <div className="absolute sm:top-10 top-2 md:top-6 lg:top-10 xl:top-20">
+            <div className="absolute sm:top-10 top-0 md:top-6 lg:top-10 xl:top-0">
               <img
                 ref={landingImageMRef}
                 src={landing}
@@ -629,6 +662,31 @@ const Landing = () => {
             </div>
           </div>
         </div>
+        {!animationCompleted && (
+          <div
+            ref={arrowRef}
+            onClick={handleArrowClick}
+            className="fixed sm:right-[20rem] right-[10rem] bottom-10 md:right-30 md:bottom-20 z-50 flex flex-col items-center"
+          >
+            <div className="scroll-arrow circular-text-container flex items-center flex-col ">
+              <div className=" border-none  p-2 md:p-3">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.0001 10.7918L5.47925 14.021C5.20147 14.2154 4.91341 14.2396 4.61508 14.0935C4.31675 13.9474 4.1673 13.701 4.16675 13.3543C4.16675 13.2154 4.19814 13.0835 4.26091 12.9585C4.32369 12.8335 4.41036 12.7362 4.52091 12.6668L10.0001 8.75014L15.4792 12.6668C15.5904 12.7362 15.6773 12.8335 15.7401 12.9585C15.8029 13.0835 15.834 13.2154 15.8334 13.3543C15.8334 13.6876 15.6842 13.9307 15.3859 14.0835C15.0876 14.2362 14.7992 14.2154 14.5209 14.021L10.0001 10.7918ZM10.0001 5.83347L5.47925 9.06264C5.20147 9.25708 4.91341 9.28153 4.61508 9.13597C4.31675 8.99041 4.1673 8.74347 4.16675 8.39514C4.16675 8.25625 4.19814 8.1243 4.26091 7.9993C4.32369 7.8743 4.41036 7.77708 4.52091 7.70764L10.0001 3.7918L15.4792 7.70847C15.5904 7.77791 15.6773 7.87514 15.7401 8.00014C15.8029 8.12514 15.834 8.25708 15.8334 8.39597C15.8334 8.7293 15.6842 8.97236 15.3859 9.12514C15.0876 9.27791 14.7992 9.25708 14.5209 9.06264L10.0001 5.83347Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
+              <div>Swipe Up</div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
