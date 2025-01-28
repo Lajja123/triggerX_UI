@@ -11,43 +11,6 @@ const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navItems = [
-    { id: "home", path: "/", label: "Home" },
-    { id: "create", path: "/create-job", label: "Create Job" },
-    { id: "dashboard", path: "/dashboard", label: "Dashboard" },
-  ];
-
-  const isActiveRoute = (path) => location.pathname === path;
-
-  const handleMouseEnter = (event) => {
-    const hoveredElement = event.currentTarget;
-    const rect = hoveredElement.getBoundingClientRect();
-    const navRect = navRef.current.getBoundingClientRect();
-
-    const direction = prevRect
-      ? rect.x > prevRect.x
-        ? "right"
-        : "left"
-      : "none";
-
-    setHighlightStyle({
-      opacity: 1,
-      width: `${rect.width}px`,
-      height: `${rect.height}px`,
-      transform: `translateX(${rect.x - navRect.x}px)`,
-      transition: prevRect ? "all 0.3s ease" : "none",
-    });
-
-    setPrevRect(rect);
-  };
-
-  const handleMouseLeave = () => {
-    setHighlightStyle((prev) => ({
-      ...prev,
-      opacity: 0,
-      transition: "all 0.3s ease",
-    }));
-  };
 
   return (
     <>
@@ -65,50 +28,7 @@ const Footer = () => {
           className="absolute lg:w-[250px] md:w-[250px] sm:w-[150px] w-[150px] right-0 -z-10"
         />
         <div className=" lg:mt-40 md:mt-40 mt-20 sm:mt-20 flex justify-between  flex-col">
-          <div className="flex flex-col items-center justify-end  py-8">
-            {/* <nav
-              ref={navRef}
-              className="relative bg-[#181818F0] p-1 rounded-xl z-10"
-              onMouseLeave={handleMouseLeave}
-            >
-              <div
-                className="absolute bg-gradient-to-r from-[#D9D9D924] to-[#14131324] rounded-xl border border-[#4B4A4A] opacity-0"
-                style={highlightStyle}
-              />
-
-              <div className="relative flex gap-5">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => navigate(item.path)}
-                    onMouseEnter={handleMouseEnter}
-                    className={`
-                              text-center lg:w-[150px] md:w-[100px] px-7 py-3 rounded-xl
-                              text-white relative z-10 cursor-pointer
-                              ${
-                                isActiveRoute(item.path)
-                                  ? "text-white"
-                                  : "text-gray-400"
-                              }
-                            `}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </nav> */}
-            <div className="lg:mt-20 md:mt-20 mt-10 sm:mt-10">
-              {/* Logo */}
-              <div className="lg:mb-8 md:mb-8 sm:mb-0 mb-0">
-                <div className="lg:hidden md:hidden sm:block block ">
-                  <img src={logo} alt="" className="w-[300px]" />
-                </div>
-                <div className="lg:block md:block sm:hidden hidden ">
-                  <img src={logo} alt="" />
-                </div>
-              </div>
-            </div>
-          </div>
+        
           {/* Copyright and Social Links */}
           <div className="flex items-center justify-between w-full px-4 mb-4 sm:flex-col flex-col md:flex-row lg:flex-row ">
             <div className="w-[100%] text-center pb-3 sm:p-3 md:pb-0 lg:p-0">

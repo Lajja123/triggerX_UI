@@ -16,18 +16,14 @@ const Landing = () => {
   const navRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-
   const landingImageRef = useRef(null);
-  const logoRef = useRef(null);
   const mainLogoRef = useRef(null);
   const containerRef = useRef(null);
   const headerRef = useRef(null);
-  // const navContainerRef = useRef(null);
   const navigationRef = useRef(null);
   const nextGenRef = useRef(null);
   const animationPlayed = useRef(false);
   const circularTextRef = useRef(null);
-  const arrowRef = useRef(null);
 
   const navItems = [
     { id: "home", path: "/", label: "Home" },
@@ -195,11 +191,7 @@ const Landing = () => {
     const rect = hoveredElement.getBoundingClientRect();
     const navRect = navRef.current.getBoundingClientRect();
 
-    const direction = prevRect
-      ? rect.x > prevRect.x
-        ? "right"
-        : "left"
-      : "none";
+   
 
     setHighlightStyle({
       opacity: 1,

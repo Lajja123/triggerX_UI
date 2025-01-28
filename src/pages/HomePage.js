@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import {  useRef  } from "react";
 import chain from "../assets/chain.svg";
 import architect from "../assets/architect.svg";
 import architect2 from "../assets/architect2.svg";

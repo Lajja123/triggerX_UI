@@ -5,7 +5,6 @@ import HomePage from "./pages/HomePage";
 import CreateJobPage from "./pages/CreateJobPage";
 import DashboardPage from "./pages/DashboardPage";
 import Providers from "./providers";
-import Landing from "./pages/Landing";
 import { useEffect, useState } from "react";
 import Preloader from "../src/Preloader";
 
@@ -23,9 +22,9 @@ const App = () => {
 
   return (
     <Providers>
-      {/* {loading ? (
+      {loading ? (
         <Preloader />
-      ) : ( */}
+      ) : (
       <Router>
         <Layout>
           <Routes>
@@ -35,7 +34,7 @@ const App = () => {
           </Routes>
         </Layout>
       </Router>
-      {/* )} */}
+     )} 
     </Providers>
   );
 };
