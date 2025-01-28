@@ -1,5 +1,5 @@
 import React from "react";
-import {  useRef  } from "react";
+import { useRef } from "react";
 import chain from "../assets/chain.svg";
 import architect from "../assets/architect.svg";
 import architect2 from "../assets/architect2.svg";
@@ -499,8 +499,6 @@ function Homepage() {
                 </div>
               </div>
 
-          
-
               <div className="bg-[#141414] text-white p-8 lg:max-w-xs md:max-w-xs sm:max-w-xs max-w-sm mx-auto rounded-[30px] sm:hidden hidden lg:block md:block">
                 <div className="relative text-white p-8 max-w-sm mx-auto">
                   <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#C07AF6] rounded-tl-md"></div>
@@ -514,7 +512,7 @@ function Homepage() {
 
             {/* Center img */}
             <div className="lg:hidden md:hidden sm:block block my-10 ">
-              <div className="absolute top-[23%] left-[35%] flex items-center transform rotate-90">
+              <div className="absolute top-[22.5%] left-[35%] flex items-center transform rotate-90">
                 <div className="w-2 h-2 bg-white transform rotate-45"></div>
                 <div className="w-[50px] h-[2px] bg-white"></div>
               </div>
@@ -523,11 +521,11 @@ function Homepage() {
                 alt=""
                 className="lg:w-[500px] md:w-[500px] sm:w-[200px] w-[250px] relative z-10 "
               />
-              <div className="absolute top-[48%] right-[13%] flex items-center transform rotate-90">
+              <div className="absolute top-[50.5%] right-[10%] flex items-center transform rotate-90">
                 <div className="w-[90px] h-[2px] bg-white"></div>
                 <div className="w-2 h-2 bg-white transform rotate-45"></div>
               </div>
-              <div className="absolute top-[58%] left-[10%] flex items-center transform rotate-90">
+              <div className="absolute top-[59%] left-[15%] flex items-center transform rotate-90">
                 <div className="w-[240px] h-[2px] bg-white"></div>
                 <div className="w-2 h-2 bg-white transform rotate-45"></div>
               </div>
@@ -554,8 +552,6 @@ function Homepage() {
 
             {/* Right Column */}
             <div className="flex justify-center lg:gap-[50px]  md:gap-[50px]  sm:gap-[20px] gap-[20px] flex-col relative ">
-              
-
               <div className="relative text-white sm:left-[50px] left-[50px] lg:left-0 md:left-0 p-8 lg:max-w-xs md:max-w-xs sm:max-w-[15rem] max-w-[15rem] mx-auto group">
                 {/* Decorative Corner Elements */}
                 <div className="absolute top-0 left-0 lg:w-6 md:w-6 sm:w-4 w-4  h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
@@ -584,7 +580,6 @@ function Homepage() {
                 </div>
               </div>
 
-        
               <div className="relative text-white sm:right-[50px] right-[50px] lg:right-0 md:right-0 p-8 lg:max-w-xs md:max-w-xs sm:max-w-[15rem] max-w-[15rem] mx-auto group">
                 {/* Decorative Corner Elements */}
                 <div className="absolute top-0 left-0 lg:w-6 md:w-6 sm:w-4 w-4  h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>

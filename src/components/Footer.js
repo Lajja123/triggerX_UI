@@ -11,7 +11,6 @@ const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-
   return (
     <>
       {" "}
@@ -28,7 +27,19 @@ const Footer = () => {
           className="absolute lg:w-[250px] md:w-[250px] sm:w-[150px] w-[150px] right-0 -z-10"
         />
         <div className=" lg:mt-40 md:mt-40 mt-20 sm:mt-20 flex justify-between  flex-col">
-        
+          <div className="flex flex-col items-center justify-end  py-8">
+            <div className="lg:mt-20 md:mt-20 mt-10 sm:mt-10">
+              {/* Logo */}
+              <div className="lg:mb-8 md:mb-8 sm:mb-0 mb-0">
+                <div className="lg:hidden md:hidden sm:block block ">
+                  <img src={logo} alt="" className="w-[300px]" />
+                </div>
+                <div className="lg:block md:block sm:hidden hidden ">
+                  <img src={logo} alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
           {/* Copyright and Social Links */}
           <div className="flex items-center justify-between w-full px-4 mb-4 sm:flex-col flex-col md:flex-row lg:flex-row ">
             <div className="w-[100%] text-center pb-3 sm:p-3 md:pb-0 lg:p-0">
