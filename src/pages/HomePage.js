@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
-
 import chain from "../assets/chain.svg";
 import architect from "../assets/architect.svg";
 import architect2 from "../assets/architect2.svg";
@@ -169,7 +168,7 @@ function Homepage() {
                       and event-triggered automation
                     </h4>
                   </div>
-                  <img src={job} alt={""} />
+                  <img src={job} alt={""} className="absolute right-0" />
                 </div>
 
                 {/* Crypto-Economic Security */}
@@ -201,8 +200,12 @@ function Homepage() {
                 </div>
 
                 {/* Scalable Architecture */}
-                <div className="relative bg-[#111111] rounded-lg flex items-end flex-col">
-                  <img src={architect} alt={""} />
+                <div className="relative bg-[#111111] rounded-lg flex justify-center flex-col">
+                  <img
+                    src={architect}
+                    alt={""}
+                    className="absolute right-0 top-0"
+                  />
 
                   <div className="relative z-10 p-8 ">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
@@ -213,11 +216,15 @@ function Homepage() {
                       configuration effort
                     </h4>
                   </div>
-                  <img src={architect2} alt={""} />
+                  <img
+                    src={architect2}
+                    alt={""}
+                    className="absolute bottom-0 right-0"
+                  />
                 </div>
 
                 {/* Powered by EigenLayer - Spans 2 columns */}
-                <div className="relative bg-[#111111]  rounded-lg  flex items-start">
+                <div className="relative bg-[#111111]  rounded-lg  flex items-start justify-between">
                   <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Powered by EigenLayer
@@ -227,12 +234,16 @@ function Homepage() {
                       economic security
                     </h4>
                   </div>
-                  <img src={power} alt={""} />
+                  <img
+                    src={power}
+                    alt={""}
+                    className="w-[80px] absolute right-0"
+                  />
                 </div>
 
                 {/* BLS Signature Aggregation */}
-                <div className="relative bg-[#111111]  rounded-lg col-span-2 flex  items-center">
-                  <img src={bls} alt={""} />
+                <div className="relative bg-[#111111]  rounded-lg col-span-2 flex  items-start justify-start">
+                  <img src={bls} alt={""} className="w-[250px]" />
 
                   <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
@@ -256,7 +267,7 @@ function Homepage() {
                       view keeper performance metrics
                     </h4>
                   </div>
-                  <img src={insights} alt={""} />
+                  <img src={insights} alt={""} className="absolute right-0" />
                 </div>
               </div>
             </div>
@@ -459,7 +470,7 @@ function Homepage() {
           <div className="w-[90%] mx-auto lg:mt-40 md:mt-40 mt-20 sm:mt-20 flex justify-between relative sm:flex-col flex-col md:flex-row lg:flex-row items-center ">
             {/* Left Column */}
             <div className="flex justify-between gap-[200px] flex-col relative">
-              <div className="relative text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto group">
+              <div className="relative text-white p-8 lg:max-w-xs md:max-w-xs sm:max-w-[15rem] max-w-[15rem] sm:right-[50px] right-[50px] lg:right-0 md:right-0 mx-auto group">
                 {/* Decorative Corner Elements */}
                 <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
                 <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
@@ -476,10 +487,10 @@ function Homepage() {
                     </div>
 
                     <div>
-                      <h3 className="text-xl transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#BD72F7] group-hover:bg-clip-text group-hover:text-transparent">
+                      <h3 className="lg:text-xl md:text-lg sm:text-md text-md  transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#BD72F7] group-hover:bg-clip-text group-hover:text-transparent">
                         Incentivized Honesty
                       </h3>
-                      <h4 className="text-[#A2A2A2] mt-2 text-md">
+                      <h4 className="text-[#A2A2A2] mt-2 lg:text-md md:text-md sm:text-sm text-sm">
                         Misbehaving keepers are penalized through slashing,
                         ensuring reliability.
                       </h4>
@@ -488,15 +499,9 @@ function Homepage() {
                 </div>
               </div>
 
-              {/* Line connecting to bottom box */}
-              {/* <div className="absolute bottom-[30%] right-[-100px] w-[100px] h-[2px] bg-[#C07AF6]"></div> */}
-              {/* Line connecting to top box */}
-              {/* <div className="absolute top-[25%] right-[-100px] flex items-center">
-                <div className="w-2 h-2 bg-white transform rotate-45"></div>
+          
 
-                <div className="w-[100px] h-[2px] bg-white"></div>
-              </div> */}
-              <div className="bg-[#141414] text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-sm mx-auto rounded-[30px] sm:hidden hidden lg:block md:block">
+              <div className="bg-[#141414] text-white p-8 lg:max-w-xs md:max-w-xs sm:max-w-xs max-w-sm mx-auto rounded-[30px] sm:hidden hidden lg:block md:block">
                 <div className="relative text-white p-8 max-w-sm mx-auto">
                   <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#C07AF6] rounded-tl-md"></div>
                   <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#C07AF6] rounded-br-md"></div>
@@ -508,30 +513,53 @@ function Homepage() {
             </div>
 
             {/* Center img */}
-            <div className="lg:hidden md:hidden sm:hidden hidden">
+            <div className="lg:hidden md:hidden sm:block block my-10 ">
+              <div className="absolute top-[23%] left-[35%] flex items-center transform rotate-90">
+                <div className="w-2 h-2 bg-white transform rotate-45"></div>
+                <div className="w-[50px] h-[2px] bg-white"></div>
+              </div>
               <img
                 src={eigen}
                 alt=""
-                className="lg:w-[500px] md:w-[500px] sm:w-[180px] w-[180px] absolute right-0 left-[200px]"
+                className="lg:w-[500px] md:w-[500px] sm:w-[200px] w-[250px] relative z-10 "
               />
+              <div className="absolute top-[48%] right-[13%] flex items-center transform rotate-90">
+                <div className="w-[90px] h-[2px] bg-white"></div>
+                <div className="w-2 h-2 bg-white transform rotate-45"></div>
+              </div>
+              <div className="absolute top-[58%] left-[10%] flex items-center transform rotate-90">
+                <div className="w-[240px] h-[2px] bg-white"></div>
+                <div className="w-2 h-2 bg-white transform rotate-45"></div>
+              </div>
             </div>
-            <div className="lg:block md:block sm:hidden hidden">
-              <img src={eigen} alt="" className=" w-[500px] " />
+            <div className="lg:block md:block sm:hidden hidden relative">
+              <div className="absolute top-[10%] -left-[10%] flex items-center">
+                <div className="w-2 h-2 bg-white transform rotate-45"></div>
+                <div className="w-[130px] h-[2px] bg-white"></div>
+              </div>
+              <div className="absolute top-[28%] -right-[15%] flex items-center">
+                <div className="w-[130px] h-[2px] bg-white"></div>
+                <div className="w-2 h-2 bg-white transform rotate-45"></div>
+              </div>
+              <img
+                src={eigen}
+                alt=""
+                className=" w-[500px]  relative bottom-20 z-10"
+              />
+              <div className="absolute bottom-[33%] -right-[0%] flex items-center">
+                <div className="w-[130px] h-[2px] bg-white"></div>
+                <div className="w-2 h-2 bg-white transform rotate-45"></div>
+              </div>
             </div>
 
             {/* Right Column */}
             <div className="flex justify-center lg:gap-[50px]  md:gap-[50px]  sm:gap-[20px] gap-[20px] flex-col relative ">
-              {/* Line connecting to top box */}
-              {/* Line connecting to top box with diamond */}
-              {/* <div className="absolute top-[25%] left-[-100px] flex items-center flex-row-reverse">
-            <div className="w-[100px] h-[2px] bg-white"></div>
-            <div className="w-2 h-2 bg-white transform rotate-45"></div>
-          </div> */}
+              
 
-              <div className="relative text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto group">
+              <div className="relative text-white sm:left-[50px] left-[50px] lg:left-0 md:left-0 p-8 lg:max-w-xs md:max-w-xs sm:max-w-[15rem] max-w-[15rem] mx-auto group">
                 {/* Decorative Corner Elements */}
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
+                <div className="absolute top-0 left-0 lg:w-6 md:w-6 sm:w-4 w-4  h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
+                <div className="absolute bottom-0 right-0 lg:w-6 md:w-6 sm:w-4 w-4 h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
@@ -544,10 +572,10 @@ function Homepage() {
                     </div>
 
                     <div>
-                      <h3 className="text-xl transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#F8FF7C] group-hover:bg-clip-text group-hover:text-transparent">
+                      <h3 className="lg:text-xl md:text-lg sm:text-md text-md transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#F8FF7C] group-hover:bg-clip-text group-hover:text-transparent">
                         Shared Security
                       </h3>
-                      <h4 className="text-[#A2A2A2] mt-2 text-md">
+                      <h4 className="text-[#A2A2A2] mt-2 lg:text-md md:text-md sm:text-sm text-sm">
                         Operators leverage EigenLayer's crypto-economic
                         guarantees
                       </h4>
@@ -556,16 +584,11 @@ function Homepage() {
                 </div>
               </div>
 
-              {/* Line connecting to bottom box */}
-              {/* <div className="absolute bottom-[30%] left-[-100px] flex items-center flex-row-reverse">
-            <div className="w-[100px] h-[2px] bg-white"></div>
-            <div className="w-2 h-2 bg-white transform rotate-45"></div>
-          </div> */}
-
-              <div className="relative text-white p-8 lg:max-w-sm md:max-w-sm sm:max-w-xs max-w-xs mx-auto group">
+        
+              <div className="relative text-white sm:right-[50px] right-[50px] lg:right-0 md:right-0 p-8 lg:max-w-xs md:max-w-xs sm:max-w-[15rem] max-w-[15rem] mx-auto group">
                 {/* Decorative Corner Elements */}
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
+                <div className="absolute top-0 left-0 lg:w-6 md:w-6 sm:w-4 w-4  h-6 border-t-2 border-l-2 border-white rounded-tl-md transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
+                <div className="absolute bottom-0 right-0 lg:w-6 md:w-6 sm:w-4 w-4  h-6 border-b-2 border-r-2 border-white rounded-br-md transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
@@ -577,10 +600,10 @@ function Homepage() {
                       />
                     </div>
                     <div>
-                      <h3 className="text-xl transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#68FF9F] group-hover:bg-clip-text group-hover:text-transparent">
+                      <h3 className="lg:text-xl md:text-lg sm:text-md text-md  transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-[#FFFFFF] group-hover:to-[#68FF9F] group-hover:bg-clip-text group-hover:text-transparent">
                         Decentralized Validations
                       </h3>
-                      <h4 className="text-[#A2A2A2] mt-2 text-md">
+                      <h4 className="text-[#A2A2A2] mt-2 lg:text-md md:text-md sm:text-sm text-sm ">
                         Tasks are verified by a distributed network of keepers
                         using AVS mechanisms
                       </h4>
