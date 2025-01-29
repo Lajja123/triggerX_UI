@@ -69,8 +69,8 @@ function Homepage() {
             {/* Content Container */}
             <div className=" w-[80%] mx-auto flex justify-between items-center gap-5 sm:flex-col lg:flex-row md:flex-col flex-col">
               {/* Text Content */}
-              <div className="lg:max-w-[65%] md:max-w-[100%] sm:max-w-[65%] relative ">
-                <h4 className="text-[#A2A2A2] lg:text-lg md:text-lg text-md sm:text-md lg:leading-[2rem] md:leading-[2rem] sm:lg:leading-[1.5rem] leading-[1.5rem] p-9 tracking-wide font-normal">
+              <div className="lg:max-w-[60%] md:max-w-[100%] sm:max-w-[65%] relative ">
+                <h4 className="text-[#A2A2A2] lg:text-lg md:text-lg text-md sm:text-md lg:leading-[2rem] md:leading-[2rem] sm:lg:leading-[1.5rem] leading-[1.5rem] py-5 px-9 tracking-wide font-normal">
                   TriggerX is the future of blockchain automation—bringing ease,
                   trust, and innovation to developers, dApps, and enterprises.
                   Powered by EigenLayer's AVS (Actively Validated Services), we
@@ -96,7 +96,7 @@ function Homepage() {
                   <span className="absolute inset-0 bg-white rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
                     {/* This is the white box that moves up */}
                   </span>
-                  <span className="relative z-10 lg:px-6 md:px-6 sm:px-3 px-3 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                  <span className="relative z-10 lg:px-2 md:px-6 sm:px-3 px-3 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
                     Create Job
                   </span>
                 </button>
@@ -107,7 +107,7 @@ function Homepage() {
                   <span className="absolute inset-0 bg-white rounded-full scale-100 translate-y-0 group-hover:translate-y-0">
                     {/* This is the white box that moves up */}
                   </span>
-                  <span className="relative z-10 lg:px-6 md:px-6 sm:px-3 px-3 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                  <span className="relative z-10 lg:px-2 md:px-6 sm:px-3 px-3 py-3 rounded-full translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-out">
                     Learn More
                   </span>
                 </button>
@@ -124,18 +124,49 @@ function Homepage() {
             </div>
             {/* Right side - Feature Card */}
             <div className="flex-1 sm:hidden lg:flex md:flex hidden">
-              <div className="relative bg-[#111111] rounded-xl flex">
+              <div
+                className="relative bg-[#111111] rounded-xl flex overflow-hidden"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  const spotlight = e.currentTarget.querySelector(".spotlight");
+                  if (spotlight) {
+                    spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                  }
+                }}
+                onMouseEnter={(e) => {
+                  const spotlight = e.currentTarget.querySelector(".spotlight");
+                  if (spotlight) {
+                    spotlight.style.opacity = "0.6";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const spotlight = e.currentTarget.querySelector(".spotlight");
+                  if (spotlight) {
+                    spotlight.style.opacity = "0";
+                  }
+                }}
+              >
+                {/* Spotlight effect */}
+                <div
+                  className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out rounded-xl"
+                  style={{
+                    background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                  }}
+                />
+
                 {/* Content */}
-                <div className="relative z-10 p-8">
-                  <h3 className="text-white text-2xl  mb-4">
+                <div className="relative z-10  p-8">
+                  <h3 className="text-white text-2xl mb-4">
                     Seamless Multi-Chain Support
                   </h3>
-                  <h4 className="text-[#A2A2A2] ">
+                  <h4 className="text-[#A2A2A2]">
                     Automate tasks across diverse blockchain networks, including
                     emerging Layer 2 (L2) solutions.
                   </h4>
                 </div>
-                <img src={chain} alt={""} />
+                <img src={chain} alt="" />
               </div>
             </div>
             <div className=" lg:hidden md:hidden sm:flex ">
@@ -158,7 +189,40 @@ function Homepage() {
             <div className="md:hidden sm:hidden lg:flex hidden ">
               <div className="grid grid-cols-4 gap-6">
                 {/* Customizable Job Templates */}
-                <div className="relative bg-[#111111]  rounded-lg flex items-start">
+                <div
+                  className="relative bg-[#111111] rounded-xl flex items-start overflow-hidden "
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0.6";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0";
+                    }
+                  }}
+                >
+                  {/* Spotlight effect */}
+                  <div
+                    className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out  rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                    }}
+                  />
                   <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Customizable Job Templates
@@ -172,7 +236,40 @@ function Homepage() {
                 </div>
 
                 {/* Crypto-Economic Security */}
-                <div className="relative bg-[#111111]  rounded-lg flex items-start ">
+                <div
+                  className="relative bg-[#111111]  rounded-xl flex items-start "
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0.6";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0";
+                    }
+                  }}
+                >
+                  {/* Spotlight effect */}
+                  <div
+                    className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out  rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                    }}
+                  />
                   <img src={secure} alt={""} />
 
                   <div className="relative z-10 p-8">
@@ -187,8 +284,41 @@ function Homepage() {
                 </div>
 
                 {/* Decentralized Keeper Network */}
-                <div className="relative bg-[#111111] p-8 rounded-lg">
-                  <div className="relative z-10">
+                <div
+                  className="relative bg-[#111111] p-8 rounded-xl"
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0.6";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0";
+                    }
+                  }}
+                >
+                  {/* Spotlight effect */}
+                  <div
+                    className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out  rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                    }}
+                  />
+                  <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Decentralized Keeper Network
                     </h3>
@@ -200,7 +330,40 @@ function Homepage() {
                 </div>
 
                 {/* Scalable Architecture */}
-                <div className="relative bg-[#111111] rounded-lg flex justify-center flex-col">
+                <div
+                  className="relative bg-[#111111] rounded-xl flex justify-center flex-col"
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0.6";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0";
+                    }
+                  }}
+                >
+                  {/* Spotlight effect */}
+                  <div
+                    className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out  rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                    }}
+                  />
                   <img
                     src={architect}
                     alt={""}
@@ -224,7 +387,40 @@ function Homepage() {
                 </div>
 
                 {/* Powered by EigenLayer - Spans 2 columns */}
-                <div className="relative bg-[#111111]  rounded-lg  flex items-start justify-between">
+                <div
+                  className="relative bg-[#111111]  rounded-xl flex items-start justify-between"
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0.6";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0";
+                    }
+                  }}
+                >
+                  {/* Spotlight effect */}
+                  <div
+                    className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out  rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                    }}
+                  />
                   <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Powered by EigenLayer
@@ -242,7 +438,40 @@ function Homepage() {
                 </div>
 
                 {/* BLS Signature Aggregation */}
-                <div className="relative bg-[#111111]  rounded-lg col-span-2 flex  items-start justify-start">
+                <div
+                  className="relative bg-[#111111]  rounded-xl col-span-2 flex  items-start justify-start"
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0.6";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0";
+                    }
+                  }}
+                >
+                  {/* Spotlight effect */}
+                  <div
+                    className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out  rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                    }}
+                  />
                   <img src={bls} alt={""} className="w-[250px]" />
 
                   <div className="relative z-10 p-8">
@@ -257,7 +486,40 @@ function Homepage() {
                 </div>
 
                 {/* Real-Time Monitoring & Insights */}
-                <div className="relative bg-[#111111] rounded-lg flex items-start">
+                <div
+                  className="relative bg-[#111111] rounded-xl flex items-start"
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.25), transparent 80%)`;
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0.6";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const spotlight =
+                      e.currentTarget.querySelector(".spotlight");
+                    if (spotlight) {
+                      spotlight.style.opacity = "0";
+                    }
+                  }}
+                >
+                  {/* Spotlight effect */}
+                  <div
+                    className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out  rounded-xl"
+                    style={{
+                      background: `radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 80%)`,
+                    }}
+                  />
                   <div className="relative z-10 p-8 ">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Real-Time Monitoring & Insights
@@ -275,7 +537,7 @@ function Homepage() {
               <div className="grid grid-cols-2 gap-3">
                 {/* Decentralized Keeper Network */}
                 <div className="relative bg-[#111111] p-8 rounded-lg">
-                  <div className="relative z-10">
+                  <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Decentralized Keeper Network
                     </h3>
@@ -287,7 +549,7 @@ function Homepage() {
                 </div>
 
                 {/* Scalable Architecture */}
-                <div className="relative bg-[#111111] rounded-lg flex items-end flex-col">
+                <div className="relative bg-[#111111] rounded-xl flex items-end flex-col">
                   <img src={architect} alt={""} />
 
                   <div className="relative z-10 p-8 ">
@@ -303,7 +565,7 @@ function Homepage() {
                 </div>
 
                 {/* Customizable Job Templates */}
-                <div className="relative bg-[#111111]  rounded-lg flex items-start">
+                <div className="relative bg-[#111111]  rounded-xl flex items-start">
                   <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Customizable Job Templates
@@ -317,7 +579,7 @@ function Homepage() {
                 </div>
 
                 {/* Crypto-Economic Security */}
-                <div className="relative bg-[#111111]  rounded-lg flex items-start ">
+                <div className="relative bg-[#111111]  rounded-xl flex items-start ">
                   <img src={secure} alt={""} className="sm:hidden hidden" />
 
                   <div className="relative z-10 p-8">
@@ -332,7 +594,7 @@ function Homepage() {
                 </div>
 
                 {/* BLS Signature Aggregation */}
-                <div className="relative bg-[#111111]  rounded-lg col-span-2 flex  items-center">
+                <div className="relative bg-[#111111] rounded-xl col-span-2 flex  items-center">
                   <img src={bls} alt={""} className="w-[100px]" />
 
                   <div className="relative z-10 p-8">
@@ -347,7 +609,7 @@ function Homepage() {
                 </div>
 
                 {/* Powered by EigenLayer - Spans 2 columns */}
-                <div className="relative bg-[#111111]  rounded-lg  flex items-center">
+                <div className="relative bg-[#111111]  rounded-xl flex items-center">
                   <div className="relative z-10 p-8">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
                       Powered by EigenLayer
@@ -361,7 +623,7 @@ function Homepage() {
                 </div>
 
                 {/* Real-Time Monitoring & Insights */}
-                <div className="relative bg-[#111111] rounded-lg flex items-center">
+                <div className="relative bg-[#111111] rounded-xl flex items-center">
                   <img src={Minsights} alt={""} className="sm:hidden hidden" />
                   <div className="relative z-10 p-8 ">
                     <h3 className="text-white text-lg lg:text-2xl md:text-2xl sm:text-lg  mb-4">
@@ -389,7 +651,7 @@ function Homepage() {
                       with
                       <span className="relative text-[#5047FF] py-2 px-4 ml-3 lg:text-6xl md:text-5xl sm:text-2xl text-2xl ">
                         TriggerX ?{/* Decorative Elements */}
-                        <div className="absolute inset-0 border-2 border-transparent pointer-events-none">
+                        <div className="absolute inset-0 border-2 border-transparent pointer-events-none  rounded-xl">
                           {/* Top Left Corner */}
                           <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-[#5047FF] rounded-tl-md"></div>
                           {/* Bottom Right Corner */}
@@ -467,7 +729,7 @@ function Homepage() {
               </h4>
             </div>
           </div>
-          <div className="w-[90%] mx-auto lg:mt-40 md:mt-40 mt-20 sm:mt-20 flex justify-between relative sm:flex-col flex-col md:flex-row lg:flex-row items-center ">
+          <div className="w-[90%]  mx-auto lg:mt-40 md:mt-40 mt-20 sm:mt-20 flex justify-evenly relative sm:flex-col flex-col md:flex-row lg:flex-row items-center ">
             {/* Left Column */}
             <div className="flex justify-between gap-[200px] flex-col relative">
               <div className="relative text-white p-8 lg:max-w-xs md:max-w-xs sm:max-w-[15rem] max-w-[15rem] sm:right-[50px] right-[50px] lg:right-0 md:right-0 mx-auto group">
@@ -682,7 +944,7 @@ function Homepage() {
             {/* Get Started Section */}
             <div className="max-w-5xl mx-auto text-center">
               <h1 className="text-4xl md:text-6xl text-white  pb-2 text-center ">
-                Who is TriggerX For?
+                Get Started Today
               </h1>
 
               <div className="bg-[#141414] rounded-lg px-6 py-3 border border-[#FFFFFF] mx-auto mt-8 min-w-min lg:w-[600px] md:w-[600px] sm:w-[400px]">

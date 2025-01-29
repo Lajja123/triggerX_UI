@@ -251,7 +251,7 @@ const Landing = () => {
                         onClick={() => navigate(item.path)}
                         onMouseEnter={handleMouseEnter}
                         className={`
-                    text-center lg:w-[120px] md:w-[100px] px-3 py-2 rounded-xl
+                    text-center lg:w-[100px] md:w-[100px] px-3 py-2 rounded-xl
                     text-white relative z-10 cursor-pointer
                     ${isActiveRoute(item.path) ? "text-white" : "text-gray-400"}
                   `}
